@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: a66f16a05c4e037438735cf409f1f373
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - confettiObj: {instanceID: 0}
+  - sprite: {fileID: 21300000, guid: 71f62d3536ec3af48baecea968e0e2e8, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
