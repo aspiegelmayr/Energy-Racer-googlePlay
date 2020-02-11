@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Proyecto26;
+using UnityEditor;
+using SimpleJSON;
 
 //https://energyracer.firebaseio.com/scorelist.json?orderBy="score"&limitToLast=2
 
@@ -16,7 +18,9 @@ public class LeaderboardManager : MonoBehaviour
     public Text leaderboardScores;
     public Text warningText;
 
-    string hash;
+    JSONObject json;
+
+    public string hash;
     UserData data;
 
     // Start is called before the first frame update
@@ -45,7 +49,7 @@ public class LeaderboardManager : MonoBehaviour
 
     private void SubmitScore()
     {
-        UserData user = new UserData(nickname, score);
+        UserDetails user = new UserDetails(nickname, score);
         RestClient.Post("https://energyracer.firebaseio.com/scorelist.json", user);
     }
 
@@ -57,8 +61,8 @@ public class LeaderboardManager : MonoBehaviour
         });
         if (data != null)
         {
-            leaderboardNames.text = data.username;
-            leaderboardScores.text = data.score + " Zuge";
+            //leaderboardNames.text = data.username;
+            //leaderboardScores.text = data.score + " Zuge";
         }
         else
         {
@@ -74,10 +78,14 @@ public class LeaderboardManager : MonoBehaviour
 
     private void GetData()
     {
-        RestClient.Get<string>("https://energyracer.firebaseio.com/scorelist.json?orderBy=\"score\"&limitToLast=1").Then(response =>
+        RestClient.Get("https://energyracer.firebaseio.com/scorelist.json?orderBy=\"score\"&limitToLast=3").Then(response =>
         {
-            hash = response;
+            hash = response.Text;
+            var result = JSON.Parse(hash);
+            leaderboardNames.text = result[0]["username"];
+            leaderboardScores.text = result[0]["score"];
         });
+        
         ShowScore();
     }
 }
