@@ -118,14 +118,14 @@ using UnityEngine;
             row -= 1;
         }
 
-        board.remainingMoves--;
-        if (board.remainingMoves == 1)
+        Board.remainingMoves--;
+        if (Board.remainingMoves == 1)
         {
             board.movesText.text = "1 Move übrig";
         }
         else
         {
-            board.movesText.text = board.remainingMoves + " Moves übrig";
+            board.movesText.text = Board.remainingMoves + " Moves übrig";
         }
 
         StartCoroutine(CheckMoveCo());

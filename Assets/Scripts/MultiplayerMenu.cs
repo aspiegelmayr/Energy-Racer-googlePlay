@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MultiplayerMenu : MonoBehaviour
@@ -11,29 +15,99 @@ public class MultiplayerMenu : MonoBehaviour
     public Button[] carButtons;
     public Text[] playerTextFields;
     public Text titleText;
+    public Button[] player1CarButtons, player2CarButtons;
+    public Image[] selected;
+    public Image[] player1Select, player2Select;
+    public static Sprite player1Sprite, player2Sprite;
+    public int[] selectedButtonIndices;
+    public Button localMultiplayerStart;
+
+    public Text errorMessage;
 
     // Start is called before the first frame update
     void Start()
     {
+        selectedButtonIndices = new int[2];
+        splitArrays();
+        HideButtonBackgrounds();
         displayCarSelection();
-        disableCar("1");
+        errorMessage.enabled = false;
+        localMultiplayerStart.onClick.AddListener(CheckSelection);
+        for (int i = 0; i < carButtons.Length; i++)
+        {
+            carButtons[i].onClick.AddListener(ButtonClicked);
+        }
+    }
+
+    private void CheckSelection()
+    {
+        if (Player1HasSelected() && Player2HasSelected())
+        {
+            Board.isMultiplayer = true;
+            SceneManager.LoadScene("Game");
+        }
+        else
+        {
+            if (!Player1HasSelected() && Player2HasSelected())
+            {
+                errorMessage.text = "Spieler 1, bitte waehle ein Auto";
+            }
+            else if (!Player2HasSelected() && Player1HasSelected())
+            {
+                errorMessage.text = "Spieler 2, bitte waehle ein Auto";
+            }
+            else if (!Player2HasSelected() && !Player1HasSelected())
+            {
+                errorMessage.text = "Bitte waehlt eure Autos";
+            }
+            errorMessage.enabled = true;
+        }
+    }
+
+    void ButtonClicked()
+    {
+        string btnName = EventSystem.current.currentSelectedGameObject.name;
+        HighlightSelectedButton(GetIndexFromName(btnName));
+    }
+
+    void splitArrays()
+    {
+        player1CarButtons = new Button[carButtons.Length / 2];
+        player2CarButtons = new Button[carButtons.Length / 2];
+
+        player1Select = new Image[selected.Length / 2];
+        player2Select = new Image[selected.Length / 2];
+
+        for (int i = 0; i < carButtons.Length / 2; i++)
+        {
+            player1CarButtons[i] = carButtons[i];
+            player1Select[i] = selected[i];
+        }
+
+        for (int i = carButtons.Length / 2; i < carButtons.Length; i++)
+        {
+            player2CarButtons[i - player1CarButtons.Length] = carButtons[i];
+            player2Select[i - player1Select.Length] = selected[i];
+        }
+    }
+
+    void HideButtonBackgrounds()
+    {
+        foreach (var selectedImg in selected)
+        {
+            selectedImg.enabled = false;
+        }
     }
 
     void displayCarSelection()
     {
         // carButtons 0 - length/2 - 1 = player 1
         // carButtons length/2 - length - 1 = player 2
-        int carNumber = 0;
-        for(int i = 0; i < carButtons.Length; i++)
+
+        for (int i = 0; i < player1CarButtons.Length; i++)
         {
-            if(i < availableCars.Length)
-            {
-                carNumber = i;
-            } else
-            {
-                carNumber = i - availableCars.Length;
-            }
-            carButtons[i].image.sprite = availableCars[carNumber];
+            player1CarButtons[i].image.sprite = availableCars[i];
+            player2CarButtons[i].image.sprite = availableCars[i];
         }
 
         titleText.text = "Autoauswahl";
@@ -41,25 +115,139 @@ public class MultiplayerMenu : MonoBehaviour
         playerTextFields[1].text = "Spieler 2";
     }
 
+
+    void HighlightSelectedButton(int carNumber)
+    {
+        //check if one from player1Selected and one from player2Selected is active
+        if (carNumber <= player1CarButtons.Length)
+        {
+            if (Player1HasSelected())
+            {
+                RemoveHighlightFromButton(1);
+                EnableCar(selectedButtonIndices[0], 2);
+            }
+            selected[carNumber - 1].enabled = true;
+            selectedButtonIndices[0] = carNumber - 1;
+            player1Sprite = availableCars[carNumber - 1];
+
+            DisableCar(selectedButtonIndices[0], 2);
+        }
+        else if (carNumber > player1CarButtons.Length)
+        {
+            if (Player2HasSelected())
+            {
+                RemoveHighlightFromButton(2);
+                EnableCar(selectedButtonIndices[1], 1);
+            }
+            selected[carNumber - 1].enabled = true;
+            selectedButtonIndices[1] = carNumber - 1;
+            player2Sprite = availableCars[carNumber - player1CarButtons.Length - 1];
+            DisableCar(selectedButtonIndices[1], 1);
+        }
+
+
+    }
+
+    void RemoveHighlightFromButton(int forPlayerNumber)
+    {
+        if (forPlayerNumber == 1)
+        {
+            selected[selectedButtonIndices[0]].enabled = false;
+        }
+        else if (forPlayerNumber == 2)
+        {
+            selected[selectedButtonIndices[1]].enabled = false;
+        }
+    }
+
+
+    void DeselectCar(int index, int playerNumber)
+    {
+        if (playerNumber == 1)
+        {
+            RemoveHighlightFromButton(index);
+            EnableCar(index, 2);
+        }
+        else
+        {
+            EnableCar(index, 1);
+        }
+    }
+
     /// <summary>
     /// When one player has selected a car, the other player can't select the
     /// same car. Therefore the button is disabled for the other player.
     /// </summary>
-    /// <param name="tag">the tag of the selected car</param>
-    void disableCar(string tag)
+    /// <param name="index">the index of the selected car button</param>
+    void DisableCar(int index, int forPlayerNumber)
     {
-        foreach (var btn in FindObjectsOfType(typeof(Button)) as Button[])
+        if (forPlayerNumber == 1)
         {
-            if (btn.name == "car" + tag)
+            player1CarButtons[index - player1CarButtons.Length].interactable = false;
+        }
+
+        if (forPlayerNumber == 2)
+        {
+            player2CarButtons[index].interactable = false;
+        }
+    }
+
+    void EnableCar(int index, int forPlayerNumber)
+    {
+        if (forPlayerNumber == 1)
+        {
+            player1CarButtons[index - player1CarButtons.Length].interactable = true;
+        }
+        else if (forPlayerNumber == 2)
+        {
+            player2CarButtons[index].interactable = true;
+        }
+
+    }
+
+    int GetIndexFromName(string btnName)
+    {
+        string numberOnly = Regex.Replace(btnName, "[^0-9.]", "");
+        return Convert.ToInt32(numberOnly);
+    }
+
+    bool IsSelected(Button btn)
+    {
+        int index = GetIndexFromName(btn.name);
+        if (selected[index].enabled)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool Player1HasSelected()
+    {
+        foreach (var img in player1Select)
+        {
+            if (img.enabled)
             {
-                btn.interactable = false;
+                return true;
             }
-        } 
+        }
+        return false;
+    }
+
+    bool Player2HasSelected()
+    {
+        foreach (var img in player2Select)
+        {
+            if (img.enabled)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

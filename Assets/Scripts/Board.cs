@@ -12,17 +12,18 @@ public class Board : MonoBehaviour
     private BackgroundTile[,] allTiles;
     public GameObject[] dots;
     public GameObject[,] allDots;
-    public int curScore;
+    public static int curScore;
     public int neededScore;
     public Text levelText;
     public Text movesText;
     public Text neededScoreText;
-    public int remainingMoves;
+    public static int remainingMoves;
     public bool gameOver;
     public bool gameWon;
     public Slider slider;
     public static Car car;
     public static Upgrade upgrade;
+    public static int startingMoves;
 
     public int clouds;
     public string city;
@@ -37,7 +38,7 @@ public class Board : MonoBehaviour
     static GameObject gameController;
     static LocationService locationService;
 
-  //  public static bool backgroundIsSet;
+    //  public static bool backgroundIsSet;
 
     public Sprite carImg;
 
@@ -46,7 +47,8 @@ public class Board : MonoBehaviour
     public static string curPlayer;
     public Text curPlayerText;
     public Slider player2Slider;
-    public int curPlayer2Score;
+    public static int curPlayer2Score;
+    public string winner;
 
     /// <summary>
     /// the game board is initialized, dots and background tiles are created
@@ -57,13 +59,15 @@ public class Board : MonoBehaviour
         if (isMultiplayer)
         {
             curPlayerText.text = curPlayer;
+            slider.image.sprite = MultiplayerMenu.player1Sprite;
+            player2Slider.image.sprite = MultiplayerMenu.player2Sprite;
         }
         else
         {
             curPlayerText.text = " ";
             player2Slider.gameObject.SetActive(false);
         }
-  //      backgroundIsSet = false;
+        //      backgroundIsSet = false;
 
         gameController = GameObject.Find("GameController");
 
@@ -87,8 +91,11 @@ public class Board : MonoBehaviour
             movesText.text = remainingMoves + " Moves";
         }
 
-        carImg = StartGame.activeCar.img;
-        slider.image.sprite = carImg;
+        if (!isMultiplayer)
+        {
+            carImg = StartGame.activeCar.img;
+            slider.image.sprite = carImg;
+        }
     }
 
     /// Update is called once per frame
@@ -140,6 +147,7 @@ public class Board : MonoBehaviour
         /// Setup happens at the end of LocationService Coroutine
         curScore = 0;
         neededScore = scoreToReach;
+        startingMoves = startMoves;
         remainingMoves = startMoves;
 
         slider.maxValue = neededScore;
@@ -188,7 +196,7 @@ public class Board : MonoBehaviour
 
                 dot.transform.parent = transform;
                 dot.name = i + ", " + j;
-                Debug.Log("dot tag" + dot.tag + "; dot.name: " + dot.name) ;
+                Debug.Log("dot tag" + dot.tag + "; dot.name: " + dot.name);
                 allDots[i, j] = dot;
             }
         }
@@ -304,17 +312,29 @@ public class Board : MonoBehaviour
                 if (!isMultiplayer || curPlayer == "Player 1")
                 {
                     curScore--;
+
                 }
                 else
                 {
                     curPlayer2Score--;
-                }
 
-                slider.value = curScore;
-                if (isMultiplayer)
-                {
-                    player2Slider.value = curPlayer2Score;
                 }
+            }
+
+            if (curScore < 0)
+            {
+                curScore = 0;
+            }
+
+            slider.value = curScore;
+
+            if (isMultiplayer)
+            {
+                if (curPlayer2Score < 0)
+                {
+                    curPlayer2Score = 0;
+                }
+                player2Slider.value = curPlayer2Score;
             }
             Destroy(allDots[col, row]);
             allDots[col, row] = null;
@@ -452,7 +472,6 @@ public class Board : MonoBehaviour
         {
             Board.curPlayer = "Player 1";
         }
-        curPlayerText.text = curPlayer;
     }
 
     /// <summary>
@@ -467,16 +486,18 @@ public class Board : MonoBehaviour
             if (curScore >= neededScore || remainingMoves == 0 && curScore > curPlayer2Score)
             {
                 SceneManager.LoadScene("GameWon");
+                winner = " ";
             }
-            else if (curPlayer2Score >= neededScore || remainingMoves == 0 && curScore < curPlayer2Score)
+
+
+            else if (curPlayer2Score >= neededScore && curScore < curPlayer2Score)
             {
-                curPlayer = "Player 2";
+                winner = "Player 2";
                 SceneManager.LoadScene("GameWon");
             }
-            else if (remainingMoves == 0 && curScore == curPlayer2Score && curScore < neededScore)
+            else if (remainingMoves == 0 && curScore > neededScore && curPlayer2Score > neededScore)
             {
-                curPlayer = "Draw";
-                SceneManager.LoadScene("GameWon");
+                SceneManager.LoadScene("GameOver");
             }
             switchPlayers();
         }

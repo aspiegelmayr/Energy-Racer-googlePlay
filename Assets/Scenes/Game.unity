@@ -153,7 +153,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 62, y: 13.299999}
   m_SizeDelta: {x: 186.5, y: 68}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -526,7 +526,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 253559263}
   m_FillRect: {fileID: 1343886763}
   m_HandleRect: {fileID: 253559262}
@@ -702,7 +702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &531580696
 RectTransform:
   m_ObjectHideFlags: 0
@@ -763,7 +763,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 58974797}
   m_FillRect: {fileID: 2147255100}
   m_HandleRect: {fileID: 58974796}
@@ -823,12 +823,10 @@ MonoBehaviour:
   - {fileID: 7667380458278063831, guid: 11c1ff64ee09041a98df2d259969480f, type: 3}
   - {fileID: 438468111582086551, guid: 37a8d38b778ca4fe798e60d98adbf15a, type: 3}
   - {fileID: 3093575487568354092, guid: 98a97efb535fe40a5bbe2c57e8d2c350, type: 3}
-  curScore: 0
   neededScore: 0
   levelText: {fileID: 1574874017}
   movesText: {fileID: 1590580609}
   neededScoreText: {fileID: 0}
-  remainingMoves: 0
   gameOver: 0
   gameWon: 0
   slider: {fileID: 275809169}
@@ -841,7 +839,7 @@ MonoBehaviour:
   carImg: {fileID: 0}
   curPlayerText: {fileID: 1366747245}
   player2Slider: {fileID: 531580697}
-  curPlayer2Score: 0
+  winner: 
 --- !u!114 &579608681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2113,7 +2111,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
