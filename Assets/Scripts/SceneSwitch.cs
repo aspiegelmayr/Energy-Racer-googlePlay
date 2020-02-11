@@ -106,4 +106,9 @@ public class SceneSwitch : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void GoToLeaderboard()
+    {
+        SceneManager.LoadScene("Leaderboard");
+    }
 }
