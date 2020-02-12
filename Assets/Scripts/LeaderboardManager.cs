@@ -93,12 +93,19 @@ public class LeaderboardManager : MonoBehaviour
 
     private void GetData()
     {
-        RestClient.Get("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json?orderBy=\"score\"&limitToLast=1").Then(response =>
+        RestClient.Get("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json?orderBy=\"score\"&limitToLast=2").Then(response =>
         {
+            string leaders = "leaders: \n";
+            string scores = "scores: \n";
             hash = response.Text;
             var result = JSON.Parse(hash);
-            leaderboardNames.text = result[0]["username"];
-            leaderboardScores.text = result[0]["score"];
+            for (int i = 0; i < 2; i++)
+            {
+                leaders += result[i]["username"] + "\n";
+                scores += result[i]["score"] + "\n";
+            }
+            leaderboardNames.text = leaders;
+            leaderboardScores.text = scores;
             Debug.Log(result);
         });
         
