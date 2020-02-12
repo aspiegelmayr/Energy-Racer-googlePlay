@@ -231,6 +231,8 @@ MonoBehaviour:
   leaderboardNames: {fileID: 1147830448}
   leaderboardScores: {fileID: 1959484724}
   warningText: {fileID: 2138401077}
+  sendBtn: {fileID: 218583176}
+  hash: 
 --- !u!4 &154951822
 Transform:
   m_ObjectHideFlags: 0

@@ -17,8 +17,9 @@ public class LeaderboardManager : MonoBehaviour
     public Text leaderboardNames;
     public Text leaderboardScores;
     public Text warningText;
+    public Button sendBtn;
 
-    JSONObject json;
+    string curLevel;
 
     public string hash;
     UserData data;
@@ -26,11 +27,22 @@ public class LeaderboardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        curLevel = LevelSelection.districtName;
+        if(curLevel == null)
+        {
+            curLevel = "testLevel";
+        }
+
         warningText.enabled = false;
         score = Board.startingMoves - Board.remainingMoves;
         scoreText.text = score + " Züge";
         GetData();
 
+    }
+
+    private void Update()
+    {
+        GetData();
     }
 
     public void SendToDatabase()
@@ -49,13 +61,16 @@ public class LeaderboardManager : MonoBehaviour
 
     private void SubmitScore()
     {
-        UserDetails user = new UserDetails(nickname, score);
-        RestClient.Post("https://energyracer.firebaseio.com/scorelist.json", user);
+        UserData user = new UserData(nickname, score);
+        RestClient.Post("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json", user).Then(response =>
+        {
+            sendBtn.enabled = false;
+        });
     }
 
     private void ShowScore()
     {
-        RestClient.Get<UserData>("https://energyracer.firebaseio.com/scorelist/" + hash + ".json").Then(response =>
+        RestClient.Get<UserData>("https://energyracer.firebaseio.com/scorelist/" + curLevel + "/" + hash + ".json").Then(response =>
         {
             data = response;
         });
@@ -78,12 +93,13 @@ public class LeaderboardManager : MonoBehaviour
 
     private void GetData()
     {
-        RestClient.Get("https://energyracer.firebaseio.com/scorelist.json?orderBy=\"score\"&limitToLast=3").Then(response =>
+        RestClient.Get("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json?orderBy=\"score\"&limitToLast=1").Then(response =>
         {
             hash = response.Text;
             var result = JSON.Parse(hash);
             leaderboardNames.text = result[0]["username"];
             leaderboardScores.text = result[0]["score"];
+            Debug.Log(result);
         });
         
         ShowScore();
