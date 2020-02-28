@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Proyecto26;
 using UnityEditor;
 using SimpleJSON;
+using System;
+using System.Linq;
 
 //https://energyracer.firebaseio.com/scorelist.json?orderBy="score"&limitToLast=2
 
@@ -18,31 +20,34 @@ public class LeaderboardManager : MonoBehaviour
     public Text leaderboardScores;
     public Text warningText;
     public Button sendBtn;
+    public Text districtText;
 
     string curLevel;
 
-    public string hash;
     UserData data;
 
     // Start is called before the first frame update
     void Start()
     {
-        curLevel = LevelSelection.districtName;
+        leaderboardNames.text = "";
+        leaderboardScores.text = "";
+    curLevel = LevelSelection.districtName;
         if(curLevel == null)
         {
             curLevel = "testLevel";
         }
 
+        
         warningText.enabled = false;
         score = Board.startingMoves - Board.remainingMoves;
-        scoreText.text = score + " Züge";
+        scoreText.text = score + " Moves";
+        //districtText.text = curLevel;
         GetData();
-
     }
 
     private void Update()
     {
-        GetData();
+        
     }
 
     public void SendToDatabase()
@@ -54,6 +59,7 @@ public class LeaderboardManager : MonoBehaviour
         }
         else
         {
+            warningText.enabled = false;
             nickname = nameInput.text;
             SubmitScore();
         }
@@ -61,29 +67,12 @@ public class LeaderboardManager : MonoBehaviour
 
     private void SubmitScore()
     {
-        UserData user = new UserData(nickname, score);
-        RestClient.Post("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json", user).Then(response =>
+        UserData data = new UserData(nickname, score);
+        RestClient.Post("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json", data).Then(response =>
         {
             sendBtn.enabled = false;
         });
-    }
-
-    private void ShowScore()
-    {
-        RestClient.Get<UserData>("https://energyracer.firebaseio.com/scorelist/" + curLevel + "/" + hash + ".json").Then(response =>
-        {
-            data = response;
-        });
-        if (data != null)
-        {
-            //leaderboardNames.text = data.username;
-            //leaderboardScores.text = data.score + " Zuge";
-        }
-        else
-        {
-            leaderboardNames.text = "empty";
-            leaderboardScores.text = "error";
-        }
+        GetData();
     }
 
     public void GetScores()
@@ -93,22 +82,22 @@ public class LeaderboardManager : MonoBehaviour
 
     private void GetData()
     {
-        RestClient.Get("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json?orderBy=\"score\"&limitToLast=2").Then(response =>
+        leaderboardNames.text = "";
+        leaderboardScores.text = "";
+        List<UserData> scorelist = new List<UserData>();
+        RestClient.Get("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json?orderBy=\"score\"&limitToLast=10").Then(response =>
         {
-            string leaders = "leaders: \n";
-            string scores = "scores: \n";
-            hash = response.Text;
-            var result = JSON.Parse(hash);
-            for (int i = 0; i < 2; i++)
+            var result = JSON.Parse(response.Text);
+            for (int i = 0; i < 10; i++)
             {
-                leaders += result[i]["username"] + "\n";
-                scores += result[i]["score"] + "\n";
+                scorelist.Add(new UserData(result[i]["username"], result[i]["score"]));
             }
-            leaderboardNames.text = leaders;
-            leaderboardScores.text = scores;
-            Debug.Log(result);
+            scorelist = scorelist.OrderByDescending(x => x.score).ToList();
+            foreach (var entry in scorelist)
+            {
+                leaderboardNames.text += entry.username + "\n";
+                leaderboardScores.text += entry.score + "\n";
+            }
         });
-        
-        ShowScore();
     }
 }

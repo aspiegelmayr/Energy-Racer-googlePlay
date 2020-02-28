@@ -266,11 +266,11 @@ public class carShop : MonoBehaviour
 
     void AddCarsToPlayerPrefs()
     {
-        for (int i = 0; i < StartGame.cars.Length; i++)
+        foreach (var car in StartGame.cars)
         {
-            if (StartGame.cars[i].owned == true)
+            if (car.owned == true)
             {
-                PlayerPrefs.SetString(StartGame.cars[i].carName, "owned");
+                PlayerPrefs.SetString(car.carName, "owned");
                 PlayerPrefs.Save();
             }
         }

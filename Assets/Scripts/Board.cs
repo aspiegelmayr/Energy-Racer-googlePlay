@@ -43,7 +43,9 @@ public class Board : MonoBehaviour
     public Sprite carImg;
 
     //multiplayer stuff
+    public Sprite opponentCar;
     public static bool isMultiplayer;
+    public static bool isOnlineMultiplayer;
     public static string curPlayer;
     public Text curPlayerText;
     public Slider player2Slider;
@@ -62,6 +64,10 @@ public class Board : MonoBehaviour
             slider.image.sprite = MultiplayerMenu.player1Sprite;
             player2Slider.image.sprite = MultiplayerMenu.player2Sprite;
         }
+        if (isOnlineMultiplayer)
+        { 
+            player2Slider.image.sprite = opponentCar;
+        }
         else
         {
             curPlayerText.text = " ";
@@ -71,7 +77,7 @@ public class Board : MonoBehaviour
 
         gameController = GameObject.Find("GameController");
 
-        earnedCoins = 0;
+        earnedCoins = 30;
         levelText.text = "Coins: " + earnedCoins;
 
         width = 7;

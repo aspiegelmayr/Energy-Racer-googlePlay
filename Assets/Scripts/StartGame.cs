@@ -35,27 +35,28 @@ public class StartGame : MonoBehaviour
         {
             int difficulty = LocationService.GetLevelDifficulty();
             SceneBackgroundInformation.SetBackground(difficulty);
-            //  backgroundIsSet = true;
         }
     }
 
     void GetFromPlayerPrefs()
     {
-        for (int i = 0; i < cars.Length; i++)
+        foreach (var car in cars)
         {
-            if (PlayerPrefs.GetString(cars[i].carName) == "owned")
+            if (PlayerPrefs.GetString(car.carName) == "owned")
             {
-                cars[i].owned = true;
+                car.owned = true;
             }
         }
 
-        for (int i = 0; i < upgrades.Length; i++)
+        foreach (var upgrade in upgrades)
         {
-            if (PlayerPrefs.GetString(upgrades[i].upgradeName) == "owned")
+            if (PlayerPrefs.GetString(upgrade.upgradeName) == "owned")
             {
-                upgrades[i].owned = true;
+                upgrade.owned = true;
             }
         }
+
+        coins = PlayerPrefs.GetInt("coins");
 
         activeCar = cars[PlayerPrefs.GetInt("activeCar")];
         activeUpgrade = upgrades[PlayerPrefs.GetInt("activeUpgrade")];

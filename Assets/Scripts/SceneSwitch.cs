@@ -111,4 +111,9 @@ public class SceneSwitch : MonoBehaviour
     {
         SceneManager.LoadScene("Leaderboard");
     }
+
+    public void GoToMultiplayerLobby()
+    {
+        SceneManager.LoadScene("MultiplayerLobby");
+    }
 }
