@@ -118,7 +118,10 @@ using UnityEngine;
             row -= 1;
         }
 
-        Board.remainingMoves--;
+        if (!Board.isOnlineMultiplayer)
+        {
+            Board.remainingMoves--;
+        }
         if (Board.remainingMoves == 1)
         {
             board.movesText.text = "1 Move übrig";

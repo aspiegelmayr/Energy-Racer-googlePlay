@@ -10,11 +10,13 @@ public class Matchmaking : MonoBehaviour
 {
     public Text activity, matchDetails;
     public static string matchID;
-    public static string nickname;
-    public static string opponentNickname;
+    public static string hostName;
+    public static string guestName;
+    public static string role;
     public Text notFoundText, noInputText;
     public InputField matchIDInput, nicknameInput;
     bool joined;
+    bool isOpen;
 
 
     // Start is called before the first frame update
@@ -36,9 +38,11 @@ public class Matchmaking : MonoBehaviour
     public void SearchForMatch()
     {
         activity.text = "joining match";
+        role = "guest";
+        isOpen = false;
         matchID = matchIDInput.text;
-        nickname = nicknameInput.text;
-        if (matchID == "" || nickname == "")
+        guestName = nicknameInput.text;
+        if (matchID == "" || guestName == "")
         {
             noInputText.enabled = true;
         }
@@ -59,17 +63,20 @@ public class Matchmaking : MonoBehaviour
             else
             {
                 var result = JSON.Parse(response.Text);
-                Match match = new Match(result["matchID"], result["player1Name"], nickname, 0, 0, false);
+                Match match = new Match(result["matchID"], result["hostName"], guestName, 0, 0, isOpen);
                 RestClient.Put("https://energyracer.firebaseio.com/lobby/" + id + ".json", match).Then(reply =>
                 {
                     result = JSON.Parse(reply.Text);
                     matchDetails.text = "Name: " + result["matchID"] + "\n" +
-                    "Player 1: " + result["player1Name"] + ": " + result["player1Score"] + "\n" +
-                    "Player 2: " + result["player2Name"] + ": " + result["player2Score"] + "\n" +
+                    "Player 1: " + result["hostName"] + ": " + result["hostScore"] + "\n" +
+                    "Player 2: " + result["guestName"] + ": " + result["guestScore"] + "\n" +
                     "isOpen: " + result["isOpen"];
-                    opponentNickname = result["player1Name"];
+                    hostName = result["hostName"];
                     Board.isOnlineMultiplayer = true;
-                    SceneManager.LoadScene("Game");
+                    if (!result["isOpen"])
+                    {
+                        SceneManager.LoadScene("Game");
+                    }
                 });
             }
         });
@@ -78,24 +85,23 @@ public class Matchmaking : MonoBehaviour
     public void PostMatch()
     {
         joined = false;
-        nickname = nicknameInput.text;
+        hostName = nicknameInput.text;
         activity.text = "hosting match";
+        role = "host";
         matchID = matchIDInput.text;
-        if (matchID == "" || nickname == "")
+        if (matchID == "" || hostName == "")
         {
             noInputText.enabled = true;
         } else
         {
-            Match match = new Match(matchID, true, nickname);
+            isOpen = true;
+            Match match = new Match(matchID, true, hostName);
             RestClient.Put("https://energyracer.firebaseio.com/lobby/" + matchID + ".json", match).Then(response =>
             {
                 GetMatchDetails(matchID);
+                InvokeRepeating("PlayerJoined", 0.0f, 1f);
             });
-
-            while (!joined)
-            {
-                InvokeRepeating("PlayerJoined", 0.0f, 5f);
-            }
+            
         }
     }
 
@@ -106,9 +112,8 @@ public class Matchmaking : MonoBehaviour
             var result = JSON.Parse(response.Text);
             if (result["isOpen"] == false)
             {
-                joined = true;
-                opponentNickname = result["player2Name"];
-                SceneManager.LoadScene("GameScene");
+                guestName = result["guestName"];
+                SceneManager.LoadScene("Game");
             }
         });
     }

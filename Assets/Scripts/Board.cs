@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Proyecto26;
+using SimpleJSON;
 
 public class Board : MonoBehaviour
 {
@@ -70,11 +72,20 @@ public class Board : MonoBehaviour
             player2Slider.image.sprite = MultiplayerMenu.player2Sprite;
         }
         if (isOnlineMultiplayer)
-        { 
-            player2Slider.image.sprite = opponentCar;
-            playerName.text = Matchmaking.nickname;
-            player2Name.text = Matchmaking.opponentNickname;
+        {
+            if(Matchmaking.role == "host")
+            {
+                slider.image.sprite = carImg;
+                player2Slider.image.sprite = opponentCar;
+            } else
+            {
+                player2Slider.image.sprite = carImg;
+                slider.image.sprite = opponentCar;
+            }
+            playerName.text = Matchmaking.hostName;
+            player2Name.text = Matchmaking.guestName;
             player2Slider.gameObject.SetActive(true);
+            InvokeRepeating("GetOpponentScore", 0.0f, 5f);
         }
         else
         {
@@ -169,7 +180,7 @@ public class Board : MonoBehaviour
         slider.maxValue = neededScore;
         slider.value = 0;
 
-        if (isMultiplayer)
+        if (isMultiplayer || isOnlineMultiplayer)
         {
             player2Slider.maxValue = neededScore;
             player2Slider.value = 0;
@@ -316,6 +327,20 @@ public class Board : MonoBehaviour
                     {
                         curPlayer2Score++;
                     }
+                }
+                else if (isOnlineMultiplayer)
+                {
+                    if(Matchmaking.role == "host")
+                    {
+                        curScore++;
+                    } else
+                    {
+                        curPlayer2Score++;
+                    }
+                    
+                    slider.value = curScore;
+                    player2Slider.value = curPlayer2Score;
+                    PostScore();
                 }
                 else
                 {
@@ -516,6 +541,36 @@ public class Board : MonoBehaviour
                 SceneManager.LoadScene("GameOver");
             }
             switchPlayers();
+        } else if (isOnlineMultiplayer)
+        {
+             if(Matchmaking.role == "host")
+            {
+                if(curScore >= neededScore)
+                {
+                    earnedCoins = 20;
+                    DeleteDatabaseEntry();
+                    SceneManager.LoadScene("GameWon");
+                } else if (curPlayer2Score >= neededScore)
+                {
+                    earnedCoins = -10;
+                    DeleteDatabaseEntry();
+                    SceneManager.LoadScene("GameOver"); 
+                } 
+            } else
+            {
+                if (curScore >= neededScore)
+                {
+                    earnedCoins = -10;
+                    DeleteDatabaseEntry();
+                    SceneManager.LoadScene("GameOver");
+                }
+                else if (curPlayer2Score >= neededScore)
+                {
+                    earnedCoins = 20;
+                    DeleteDatabaseEntry();
+                    SceneManager.LoadScene("GameWon");
+                }
+            }
         }
         else
         {
@@ -549,5 +604,47 @@ public class Board : MonoBehaviour
         }
 
         levelText.text = "coins: " + earnedCoins;
+    }
+
+    void GetOpponentScore()
+    {
+        RestClient.Get("https://energyracer.firebaseio.com/lobby/" + Matchmaking.matchID + ".json").Then(response =>
+        {
+            var result = JSON.Parse(response.Text);
+
+            if (Matchmaking.role == "host")
+            {
+                curPlayer2Score = result["guestScore"];
+
+            }
+            else
+            {
+                curPlayer2Score = result["hostScore"];
+            }
+            player2Slider.value = curPlayer2Score;
+        });
+
+    }
+
+    void PostScore()
+    {
+        Match match;
+        if(Matchmaking.role == "host")
+        {
+            match = new Match(Matchmaking.matchID, Matchmaking.hostName, Matchmaking.guestName, curScore, curPlayer2Score, false);
+        } else
+        {
+            match = new Match(Matchmaking.matchID, Matchmaking.hostName, Matchmaking.guestName, curPlayer2Score, curScore, false);
+        }
+        
+        RestClient.Put("https://energyracer.firebaseio.com/lobby/" + Matchmaking.matchID + ".json", match).Then(response =>
+        {
+
+        });
+    }
+
+    void DeleteDatabaseEntry()
+    {
+        RestClient.Delete("https://energyracer.firebaseio.com/lobby/" + Matchmaking.matchID + ".json");
     }
 }
