@@ -21,6 +21,7 @@ public class Board : MonoBehaviour
     public bool gameOver;
     public bool gameWon;
     public Slider slider;
+    public Text playerName;
     public static Car car;
     public static Upgrade upgrade;
     public static int startingMoves;
@@ -49,6 +50,7 @@ public class Board : MonoBehaviour
     public static string curPlayer;
     public Text curPlayerText;
     public Slider player2Slider;
+    public Text player2Name;
     public static int curPlayer2Score;
     public string winner;
 
@@ -58,18 +60,26 @@ public class Board : MonoBehaviour
     void Start()
     {
         curPlayer = "Player 1";
+
         if (isMultiplayer)
         {
             curPlayerText.text = curPlayer;
             slider.image.sprite = MultiplayerMenu.player1Sprite;
+            playerName.text = "Spieler 1";
+            player2Name.text = "Spieler 2";
             player2Slider.image.sprite = MultiplayerMenu.player2Sprite;
         }
         if (isOnlineMultiplayer)
         { 
             player2Slider.image.sprite = opponentCar;
+            playerName.text = Matchmaking.nickname;
+            player2Name.text = Matchmaking.opponentNickname;
+            player2Slider.gameObject.SetActive(true);
         }
         else
         {
+            player2Name.enabled = false;
+            playerName.enabled = false;
             curPlayerText.text = " ";
             player2Slider.gameObject.SetActive(false);
         }
@@ -485,7 +495,7 @@ public class Board : MonoBehaviour
     /// </summary>
     public void CheckGameOver()
     {
-        if (Board.isMultiplayer)
+        if (isMultiplayer)
         {
             curPlayerText.text = Board.curPlayer;
 

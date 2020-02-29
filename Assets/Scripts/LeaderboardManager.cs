@@ -24,14 +24,15 @@ public class LeaderboardManager : MonoBehaviour
 
     string curLevel;
 
-    UserData data;
+    private float nextActionTime = 0.0f;
+    public float period = 10f;
 
     // Start is called before the first frame update
     void Start()
     {
         leaderboardNames.text = "";
         leaderboardScores.text = "";
-    curLevel = LevelSelection.districtName;
+        curLevel = LevelSelection.districtName;
         if(curLevel == null)
         {
             curLevel = "testLevel";
@@ -41,13 +42,13 @@ public class LeaderboardManager : MonoBehaviour
         warningText.enabled = false;
         score = Board.startingMoves - Board.remainingMoves;
         scoreText.text = score + " Moves";
-        //districtText.text = curLevel;
-        GetData();
+        districtText.text = curLevel;
+        InvokeRepeating("GetData", 0.0f, 10f);
     }
 
     private void Update()
     {
-        
+  
     }
 
     public void SendToDatabase()
@@ -75,18 +76,15 @@ public class LeaderboardManager : MonoBehaviour
         GetData();
     }
 
-    public void GetScores()
-    {
-        GetData();
-    }
-
     private void GetData()
     {
-        leaderboardNames.text = "";
+        leaderboardNames.text = "Loading...";
         leaderboardScores.text = "";
         List<UserData> scorelist = new List<UserData>();
         RestClient.Get("https://energyracer.firebaseio.com/scorelist/" + curLevel + ".json?orderBy=\"score\"&limitToLast=10").Then(response =>
         {
+            leaderboardNames.text = "";
+            leaderboardScores.text = "";
             var result = JSON.Parse(response.Text);
             for (int i = 0; i < 10; i++)
             {

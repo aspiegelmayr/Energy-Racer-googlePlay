@@ -11,13 +11,16 @@ public class Matchmaking : MonoBehaviour
     public Text activity, matchDetails;
     public static string matchID;
     public static string nickname;
+    public static string opponentNickname;
     public Text notFoundText, noInputText;
     public InputField matchIDInput, nicknameInput;
+    bool joined;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        joined = false;
         matchID = matchIDInput.text;
 
         noInputText.enabled = false;
@@ -64,6 +67,7 @@ public class Matchmaking : MonoBehaviour
                     "Player 1: " + result["player1Name"] + ": " + result["player1Score"] + "\n" +
                     "Player 2: " + result["player2Name"] + ": " + result["player2Score"] + "\n" +
                     "isOpen: " + result["isOpen"];
+                    opponentNickname = result["player1Name"];
                     Board.isOnlineMultiplayer = true;
                     SceneManager.LoadScene("Game");
                 });
@@ -73,6 +77,7 @@ public class Matchmaking : MonoBehaviour
 
     public void PostMatch()
     {
+        joined = false;
         nickname = nicknameInput.text;
         activity.text = "hosting match";
         matchID = matchIDInput.text;
@@ -86,25 +91,25 @@ public class Matchmaking : MonoBehaviour
             {
                 GetMatchDetails(matchID);
             });
-            
-            //PlayerJoined();
+
+            while (!joined)
+            {
+                InvokeRepeating("PlayerJoined", 0.0f, 5f);
+            }
         }
     }
 
     private void PlayerJoined()
     {
-        bool joined = false;
-        while (!joined)
+        RestClient.Get("https://energyracer.firebaseio.com/lobby/" + matchID + ".json").Then(response =>
         {
-            RestClient.Get("https://energyracer.firebaseio.com/lobby/" + matchID + ".json").Then(response =>
+            var result = JSON.Parse(response.Text);
+            if (result["isOpen"] == false)
             {
-                var result = JSON.Parse(response.Text);
-                if(result["isOpen"] == false)
-                {
-                    joined = true;
-                    SceneManager.LoadScene("GameScene");
-                }  
-            });
-        }
+                joined = true;
+                opponentNickname = result["player2Name"];
+                SceneManager.LoadScene("GameScene");
+            }
+        });
     }
 }
