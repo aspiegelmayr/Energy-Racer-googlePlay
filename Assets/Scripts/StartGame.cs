@@ -19,11 +19,14 @@ public class StartGame : MonoBehaviour
     public static Car activeCar;
     public static Upgrade activeUpgrade;
 
+    public GameObject multiplayerPanel;
+
     /// <summary>
     /// get the amount of coins from local storage
     /// </summary>
     void Start()
     {
+        multiplayerPanel.SetActive(false);
         cars = new Car[3];
         upgrades = new Upgrade[3];
         coins = new int();
@@ -81,5 +84,15 @@ public class StartGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void HidePanel()
+    {
+        multiplayerPanel.SetActive(false);
+    }
+
+    public void ShowPanel()
+    {
+        multiplayerPanel.SetActive(true);
     }
 }

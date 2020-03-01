@@ -32,17 +32,6 @@ public class SceneSwitch : MonoBehaviour
 
     public void Update()
     {
-       // backgroundIsSet = false;
-       // if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Game"))
-      //  {
-
-            //if (backgroundIsSet == false)
-            //{
-            //    int difficulty = LocationService.GetLevelDifficulty();
-           //     SceneBackgroundInformation.SetBackground(difficulty);
-            //    backgroundIsSet = true;
-          //  }
-       // }
     }
 
     public void GotoGameOverScene()
@@ -62,12 +51,6 @@ public class SceneSwitch : MonoBehaviour
 
     public void GotoLevelSelectScene()
     {
-        //LevelSelection.districtName = EventSystem.current.currentSelectedGameObject.name;
-        //if (int.Parse(EventSystem.current.currentSelectedGameObject.tag) > DistrictSelection.curDistrict)
-        //{
-        //    DistrictSelection.curDistrict = int.Parse(EventSystem.current.currentSelectedGameObject.tag);
-        //}
-        //Debug.Log(EventSystem.current.currentSelectedGameObject.tag);
         SceneManager.LoadScene("LevelSelect");
     }
 

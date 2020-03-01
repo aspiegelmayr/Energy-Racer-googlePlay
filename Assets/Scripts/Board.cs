@@ -56,6 +56,7 @@ public class Board : MonoBehaviour
     public static int curPlayer2Score;
     public string winner;
 
+    //TODO: online multi: give 10 coins, get 20
     /// <summary>
     /// the game board is initialized, dots and background tiles are created
     /// </summary>
@@ -619,9 +620,9 @@ public class Board : MonoBehaviour
             }
             else
             {
-                curPlayer2Score = result["hostScore"];
+                curScore = result["hostScore"];
+                slider.value = curScore;
             }
-            player2Slider.value = curPlayer2Score;
         });
 
     }

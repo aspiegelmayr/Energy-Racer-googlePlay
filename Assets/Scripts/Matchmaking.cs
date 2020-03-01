@@ -6,9 +6,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//TODO: HOSTING: check availability of match ID
+//TODO: JOINING: check if game is open 
+
 public class Matchmaking : MonoBehaviour
 {
-    public Text activity, matchDetails;
+    public Text matchDetails;
     public static string matchID;
     public static string hostName;
     public static string guestName;
@@ -37,7 +40,6 @@ public class Matchmaking : MonoBehaviour
 
     public void SearchForMatch()
     {
-        activity.text = "joining match";
         role = "guest";
         isOpen = false;
         matchID = matchIDInput.text;
@@ -86,7 +88,6 @@ public class Matchmaking : MonoBehaviour
     {
         joined = false;
         hostName = nicknameInput.text;
-        activity.text = "hosting match";
         role = "host";
         matchID = matchIDInput.text;
         if (matchID == "" || hostName == "")
