@@ -63,16 +63,17 @@ public class Board : MonoBehaviour
     void Start()
     {
         curPlayer = "Player 1";
-
+        Debug.Log(isMultiplayer.ToString());
         if (isMultiplayer)
         {
             curPlayerText.text = curPlayer;
             slider.image.sprite = MultiplayerMenu.player1Sprite;
             playerName.text = "Spieler 1";
             player2Name.text = "Spieler 2";
+            player2Slider.gameObject.SetActive(true);
             player2Slider.image.sprite = MultiplayerMenu.player2Sprite;
         }
-        if (isOnlineMultiplayer)
+        else if (isOnlineMultiplayer)
         {
             if(Matchmaking.role == "host")
             {
@@ -88,14 +89,13 @@ public class Board : MonoBehaviour
             player2Slider.gameObject.SetActive(true);
             InvokeRepeating("GetOpponentScore", 0.0f, 5f);
         }
-        else
+        else if(!isMultiplayer && !isOnlineMultiplayer)
         {
             player2Name.enabled = false;
             playerName.enabled = false;
             curPlayerText.text = " ";
             player2Slider.gameObject.SetActive(false);
         }
-        //      backgroundIsSet = false;
 
         gameController = GameObject.Find("GameController");
 
