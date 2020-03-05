@@ -826,7 +826,7 @@ MonoBehaviour:
   - {fileID: 438468111582086551, guid: 37a8d38b778ca4fe798e60d98adbf15a, type: 3}
   - {fileID: 3093575487568354092, guid: 98a97efb535fe40a5bbe2c57e8d2c350, type: 3}
   neededScore: 0
-  levelText: {fileID: 1574874017}
+  coinsText: {fileID: 1574874017}
   movesText: {fileID: 1590580609}
   neededScoreText: {fileID: 0}
   gameOver: 0
@@ -1778,7 +1778,7 @@ GameObject:
   - component: {fileID: 1574874018}
   - component: {fileID: 1574874017}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: coinsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

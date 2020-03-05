@@ -6,9 +6,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-//TODO: HOSTING: check availability of match ID
-//TODO: JOINING: check if game is open 
-
 public class Matchmaking : MonoBehaviour
 {
     public Text matchDetails;
@@ -19,6 +16,7 @@ public class Matchmaking : MonoBehaviour
     public Text notFoundText, noInputText;
     public InputField matchIDInput, nicknameInput;
     bool joined;
+    bool lobbyIsOpen;
     bool isOpen;
 
 
@@ -40,6 +38,8 @@ public class Matchmaking : MonoBehaviour
 
     public void SearchForMatch()
     {
+        hostName = "";
+        SetLobbyStatus();
         role = "guest";
         isOpen = false;
         matchID = matchIDInput.text;
@@ -47,11 +47,51 @@ public class Matchmaking : MonoBehaviour
         if (matchID == "" || guestName == "")
         {
             noInputText.enabled = true;
+        } else if (!lobbyIsOpen)
+        {
+            matchDetails.text = "Du kannst der Lobby \"" + matchID + "\" nicht beitreten. \nBitte suche dir eine andere aus.";
         }
         else
         {
             GetMatchDetails(matchID);
         }
+    }
+
+    void SetLobbyStatus()
+    {
+        RestClient.Get("https://energyracer.firebaseio.com/lobby/" + matchID + ".json").Then(response =>
+        {
+            var result = JSON.Parse(response.Text);
+            Debug.Log(result["isOpen"]);
+            if (result["isOpen"] == true)
+            {
+                lobbyIsOpen = true;
+            } else
+            {
+                lobbyIsOpen = false;
+            }
+        });
+    }
+
+    public void IsValidLobbyName()
+    {
+        hostName = nicknameInput.text;
+        matchID = matchIDInput.text;
+        matchDetails.text = "";
+        RestClient.Get("https://energyracer.firebaseio.com/lobby/" + matchID + ".json").Then(response =>
+        {
+            
+            var result = JSON.Parse(response.Text);
+            if (result == null)
+            {
+                PostMatch();
+            }
+            else
+            {
+                matchDetails.text = "Match mit dem Namen " + matchID + " existiert bereits. \nBitte gib einen anderen Namen ein.";
+            }
+        });
+
     }
 
     void GetMatchDetails(string id)
@@ -80,6 +120,7 @@ public class Matchmaking : MonoBehaviour
                     Board.isOnlineMultiplayer = true;
                     if (!result["isOpen"])
                     {
+                        Board.isOnlineMultiplayer = true;
                         SceneManager.LoadScene("Game");
                     }
                 });
@@ -87,16 +128,16 @@ public class Matchmaking : MonoBehaviour
         });
     }
 
-    public void PostMatch()
+    private void PostMatch()
     {
-        joined = false;
-        hostName = nicknameInput.text;
-        role = "host";
-        matchID = matchIDInput.text;
+            guestName = "";
+            joined = false;
+            role = "host";
         if (matchID == "" || hostName == "")
         {
             noInputText.enabled = true;
-        } else
+        }
+        else
         {
             isOpen = true;
             Match match = new Match(matchID, true, hostName);
@@ -105,7 +146,7 @@ public class Matchmaking : MonoBehaviour
                 GetMatchDetails(matchID);
                 InvokeRepeating("PlayerJoined", 0.0f, 1f);
             });
-            
+
         }
     }
 
@@ -117,6 +158,7 @@ public class Matchmaking : MonoBehaviour
             if (result["isOpen"] == false)
             {
                 guestName = result["guestName"];
+                Board.isOnlineMultiplayer = true;
                 SceneManager.LoadScene("Game");
             }
         });

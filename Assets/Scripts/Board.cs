@@ -16,7 +16,7 @@ public class Board : MonoBehaviour
     public GameObject[,] allDots;
     public static int curScore;
     public int neededScore;
-    public Text levelText;
+    public Text coinsText;
     public Text movesText;
     public Text neededScoreText;
     public static int remainingMoves;
@@ -58,7 +58,6 @@ public class Board : MonoBehaviour
     public static string player1Nickname;
     public static string player2Nickname;
 
-    //TODO: online multi: give 10 coins, get 20
     /// <summary>
     /// the game board is initialized, dots and background tiles are created
     /// </summary>
@@ -75,6 +74,8 @@ public class Board : MonoBehaviour
         }
         else if (isOnlineMultiplayer)
         {
+            coinsText.enabled = false;
+            movesText.enabled = false;
             if(Matchmaking.role == "host")
             {
                 slider.image.sprite = carImg;
@@ -100,7 +101,7 @@ public class Board : MonoBehaviour
         gameController = GameObject.Find("GameController");
 
         earnedCoins = 30;
-        levelText.text = "Coins: " + earnedCoins;
+        coinsText.text = "Coins: " + earnedCoins;
 
         width = 7;
         height = 7;
@@ -119,7 +120,7 @@ public class Board : MonoBehaviour
             movesText.text = remainingMoves + " Moves";
         }
 
-        if (!isMultiplayer)
+        if (!isMultiplayer && !isOnlineMultiplayer)
         {
             carImg = StartGame.activeCar.img;
             slider.image.sprite = carImg;
@@ -604,7 +605,7 @@ public class Board : MonoBehaviour
             earnedCoins = 20;
         }
 
-        levelText.text = "coins: " + earnedCoins;
+        coinsText.text = "coins: " + earnedCoins;
     }
 
     void GetOpponentScore()
