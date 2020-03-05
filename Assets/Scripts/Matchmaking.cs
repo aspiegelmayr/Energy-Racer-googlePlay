@@ -70,9 +70,12 @@ public class Matchmaking : MonoBehaviour
                 {
                     result = JSON.Parse(reply.Text);
                     matchDetails.text = "Name: " + result["matchID"] + "\n" +
-                    "Player 1: " + result["hostName"] + ": " + result["hostScore"] + "\n" +
-                    "Player 2: " + result["guestName"] + ": " + result["guestScore"] + "\n" +
-                    "isOpen: " + result["isOpen"];
+                    "Player 1: " + result["hostName"] + "\n" +
+                    "Player 2: " + result["guestName"] + "\n";
+                    if (result["isOpen"])
+                    {
+                        matchDetails.text += "Warten auf Spieler...";
+                    }
                     hostName = result["hostName"];
                     Board.isOnlineMultiplayer = true;
                     if (!result["isOpen"])

@@ -21,6 +21,8 @@ public class MultiplayerMenu : MonoBehaviour
     public static Sprite player1Sprite, player2Sprite;
     public int[] selectedButtonIndices;
     public Button localMultiplayerStart;
+    public InputField player1Nickname, player2Nickname;
+    bool validNicknames;
 
     public Text errorMessage;
 
@@ -41,9 +43,12 @@ public class MultiplayerMenu : MonoBehaviour
 
     private void CheckSelection()
     {
-        if (Player1HasSelected() && Player2HasSelected())
+        CheckNicknames();
+        if (Player1HasSelected() && Player2HasSelected() && validNicknames)
         {
+            errorMessage.enabled = false;
             Board.isMultiplayer = true;
+            SubmitNicknames();
             SceneManager.LoadScene("Game");
         }
         else
@@ -60,8 +65,28 @@ public class MultiplayerMenu : MonoBehaviour
             {
                 errorMessage.text = "Bitte waehlt eure Autos";
             }
-            errorMessage.enabled = true;
+           
         }
+    }
+
+    private void CheckNicknames()
+    {
+        if (player1Nickname.text == "" || player2Nickname.text == "")
+        {
+            errorMessage.text = "Bitte gebt eure Spitznamen ein";
+            errorMessage.enabled = true;
+        } else
+        {
+            SubmitNicknames();
+            validNicknames = true;
+        }
+       
+    }
+
+    private void SubmitNicknames()
+    {
+        Board.player1Nickname = player1Nickname.text;
+        Board.player2Nickname = player2Nickname.text;
     }
 
     void ButtonClicked()
@@ -101,9 +126,6 @@ public class MultiplayerMenu : MonoBehaviour
 
     void displayCarSelection()
     {
-        // carButtons 0 - length/2 - 1 = player 1
-        // carButtons length/2 - length - 1 = player 2
-
         for (int i = 0; i < player1CarButtons.Length; i++)
         {
             player1CarButtons[i].image.sprite = availableCars[i];

@@ -55,6 +55,8 @@ public class Board : MonoBehaviour
     public Text player2Name;
     public static int curPlayer2Score;
     public string winner;
+    public static string player1Nickname;
+    public static string player2Nickname;
 
     //TODO: online multi: give 10 coins, get 20
     /// <summary>
@@ -62,14 +64,12 @@ public class Board : MonoBehaviour
     /// </summary>
     void Start()
     {
-        curPlayer = "Player 1";
-        Debug.Log(isMultiplayer.ToString());
         if (isMultiplayer)
         {
             curPlayerText.text = curPlayer;
             slider.image.sprite = MultiplayerMenu.player1Sprite;
-            playerName.text = "Spieler 1";
-            player2Name.text = "Spieler 2";
+            playerName.text = player1Nickname;
+            player2Name.text = player2Nickname;
             player2Slider.gameObject.SetActive(true);
             player2Slider.image.sprite = MultiplayerMenu.player2Sprite;
         }
@@ -320,7 +320,7 @@ public class Board : MonoBehaviour
             {
                 if (isMultiplayer)
                 {
-                    if (curPlayer == "Player 1")
+                    if (curPlayer == player1Nickname)
                     {
                         curScore++;
                     }
@@ -351,7 +351,7 @@ public class Board : MonoBehaviour
             }
             else if (allDots[col, row].tag == "Rain" || allDots[col, row].tag == "Cloud")
             {
-                if (!isMultiplayer || curPlayer == "Player 1")
+                if (!isMultiplayer || curPlayer == player1Nickname)
                 {
                     curScore--;
 
@@ -506,13 +506,13 @@ public class Board : MonoBehaviour
 
     public void switchPlayers()
     {
-        if (Board.curPlayer == "Player 1")
+        if (Board.curPlayer == player1Nickname)
         {
-            Board.curPlayer = "Player 2";
+            Board.curPlayer = player2Nickname;
         }
         else
         {
-            Board.curPlayer = "Player 1";
+            Board.curPlayer = player1Nickname;
         }
     }
 
@@ -534,7 +534,7 @@ public class Board : MonoBehaviour
 
             else if (curPlayer2Score >= neededScore && curScore < curPlayer2Score)
             {
-                winner = "Player 2";
+                winner = player2Nickname;
                 SceneManager.LoadScene("GameWon");
             }
             else if (remainingMoves == 0 && curScore > neededScore && curPlayer2Score > neededScore)
