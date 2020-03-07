@@ -1778,7 +1778,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1878640928}
-        m_MethodName: PostMatch
+        m_MethodName: IsValidLobbyName
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

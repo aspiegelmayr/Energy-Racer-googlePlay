@@ -18,6 +18,7 @@ public class Matchmaking : MonoBehaviour
     bool joined;
     bool lobbyIsOpen;
     bool isOpen;
+    public static int level;
 
 
     // Start is called before the first frame update
@@ -39,17 +40,17 @@ public class Matchmaking : MonoBehaviour
     public void SearchForMatch()
     {
         hostName = "";
-        SetLobbyStatus();
         role = "guest";
         isOpen = false;
         matchID = matchIDInput.text;
         guestName = nicknameInput.text;
+        GetLobbyStatus();
         if (matchID == "" || guestName == "")
         {
             noInputText.enabled = true;
         } else if (!lobbyIsOpen)
         {
-            matchDetails.text = "Du kannst der Lobby \"" + matchID + "\" nicht beitreten. \nBitte suche dir eine andere aus.";
+            matchDetails.text = "Die Lobby \"" + matchID + "\" ist nicht offen. \nBitte suche dir eine andere aus.";
         }
         else
         {
@@ -57,13 +58,12 @@ public class Matchmaking : MonoBehaviour
         }
     }
 
-    void SetLobbyStatus()
+    void GetLobbyStatus()
     {
         RestClient.Get("https://energyracer.firebaseio.com/lobby/" + matchID + ".json").Then(response =>
         {
             var result = JSON.Parse(response.Text);
-            Debug.Log(result["isOpen"]);
-            if (result["isOpen"] == true)
+            if (result["isOpen"])
             {
                 lobbyIsOpen = true;
             } else
@@ -111,17 +111,29 @@ public class Matchmaking : MonoBehaviour
                     result = JSON.Parse(reply.Text);
                     matchDetails.text = "Name: " + result["matchID"] + "\n" +
                     "Player 1: " + result["hostName"] + "\n" +
-                    "Player 2: " + result["guestName"] + "\n";
+                    "Player 2: " + result["guestName"] + "\n" +
+                    "Level: " + result["level"];
                     if (result["isOpen"])
                     {
                         matchDetails.text += "Warten auf Spieler...";
+                    }
+                    if(result["level"] != 0)
+                    {
+                        level = result["level"];
                     }
                     hostName = result["hostName"];
                     Board.isOnlineMultiplayer = true;
                     if (!result["isOpen"])
                     {
                         Board.isOnlineMultiplayer = true;
-                        SceneManager.LoadScene("Game");
+                        if(role == "host")
+                        {
+                            SceneManager.LoadScene("DistrictSelect");
+                        } else
+                        {
+                            SceneManager.LoadScene("Game");
+                        }
+          
                     }
                 });
             }
@@ -159,7 +171,7 @@ public class Matchmaking : MonoBehaviour
             {
                 guestName = result["guestName"];
                 Board.isOnlineMultiplayer = true;
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("DistrictSelect");
             }
         });
     }

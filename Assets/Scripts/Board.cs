@@ -84,6 +84,7 @@ public class Board : MonoBehaviour
             {
                 player2Slider.image.sprite = carImg;
                 slider.image.sprite = opponentCar;
+                curDistr = Matchmaking.level;
             }
             playerName.text = Matchmaking.hostName;
             player2Name.text = Matchmaking.guestName;

@@ -49,7 +49,7 @@ public class MultiplayerMenu : MonoBehaviour
             errorMessage.enabled = false;
             Board.isMultiplayer = true;
             SubmitNicknames();
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("DistrictSelect");
         }
         else
         {
