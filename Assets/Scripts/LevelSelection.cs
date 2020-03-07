@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// manages the level selection scene
@@ -21,6 +22,7 @@ public class LevelSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(SceneManager.GetActiveScene().name);
         if (districtName == null)
         {
             districtName = "Nichts gefunden";

@@ -14,6 +14,7 @@ public class Match
     public bool isOpen;
     public string hostName;
     public string guestName;
+    int level;
 
     public Match(string matchID, bool isOpen)
     {
@@ -44,5 +45,16 @@ public class Match
         this.isOpen = isOpen;
         this.hostName = hostName;
         this.guestName = guestName;
+    }
+
+    public Match(string matchID, string hostName, string guestName, int hostScore, int guestScore, int level, bool isOpen)
+    {
+        this.matchID = matchID;
+        this.hostScore = hostScore;
+        this.guestScore = guestScore;
+        this.isOpen = isOpen;
+        this.hostName = hostName;
+        this.guestName = guestName;
+        this.level = level;
     }
 }

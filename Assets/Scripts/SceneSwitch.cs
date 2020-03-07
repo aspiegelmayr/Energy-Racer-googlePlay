@@ -26,8 +26,20 @@ public class SceneSwitch : MonoBehaviour
         {
             Board.isMultiplayer = false;
         }
-
         SceneManager.LoadScene("Game");
+    }
+
+    public void GoToGameOrWaitingScreen()
+    {
+        Debug.Log(SceneManager.GetActiveScene().name + Board.isOnlineMultiplayer);
+        if (SceneManager.GetActiveScene().name == "LevelSelect" && Board.isOnlineMultiplayer == true)
+        {
+            Debug.Log("OK");
+            SceneManager.LoadScene("WaitingScreen");
+        } else
+        {
+            SceneManager.LoadScene("Game");
+        }
     }
 
     public void Update()
