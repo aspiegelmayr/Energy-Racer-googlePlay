@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Shop.unity
     guid: 1acd1a8a6d94642e6ad01bc58e4a2115
   - enabled: 0
-    path: 
+    path: Assets/Scenes/OnlineMultiplayerLobby.unity
     guid: 7b106eccc1c474ed093a227760adbc59
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
@@ -38,9 +38,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MultiplayerMenu.unity
     guid: 22927a4bea8cf41ec9c406b8687c2cda
-  - enabled: 1
-    path: Assets/Scenes/WaitingScreen.unity
-    guid: a291abe6633c04f0595d25b669868bef
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
