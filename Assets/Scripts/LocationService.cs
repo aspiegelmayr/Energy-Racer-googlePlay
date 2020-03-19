@@ -290,19 +290,6 @@ public class LocationService : MonoBehaviour
                 break;
         }
         return dayTimeHours;
-        /**
-        double sunriseHour = sunrise.Hour;
-        double sunriseMinutes = (sunriseHour * 60) + sunrise.Minute;
-        double sunriseSeconds = (sunriseMinutes * 60) + sunrise.Second;
-
-        double sunsetHour = sunset.Hour;
-        double sunsetMinutes = (sunsetHour * 60) + sunset.Minute;
-        double sunsetSeconds = (sunsetMinutes * 60) + sunset.Second;
-
-        double dayTimeSeconds = (sunsetSeconds - sunriseSeconds);
-        float dayTimeMinutes = (float)(dayTimeSeconds / 60);
-        float dayTimeHours = dayTimeMinutes / 60;
-    */
     } /// GetDayTimeHours method
 
     /// <summary>

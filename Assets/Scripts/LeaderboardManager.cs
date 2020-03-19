@@ -21,10 +21,10 @@ public class LeaderboardManager : MonoBehaviour
     public Text warningText;
     public Button sendBtn;
     public Text districtText;
+    public Button submitBtn;
 
     string curLevel;
 
-    private float nextActionTime = 0.0f;
     public float period = 10f;
 
     // Start is called before the first frame update
@@ -53,6 +53,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public void SendToDatabase()
     {
+        submitBtn.interactable = false;
         if (nameInput.text == "")
         {
             warningText.enabled = true;
@@ -78,6 +79,7 @@ public class LeaderboardManager : MonoBehaviour
 
     private void GetData()
     {
+
         leaderboardNames.text = "Loading...";
         leaderboardScores.text = "";
         List<UserData> scorelist = new List<UserData>();
