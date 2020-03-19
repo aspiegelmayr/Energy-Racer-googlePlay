@@ -19,6 +19,7 @@ public class Matchmaking : MonoBehaviour
     bool lobbyIsOpen;
     bool isOpen;
     public static int level;
+    public Button hostBtn, joinBtn;
 
 
     // Start is called before the first frame update
@@ -39,9 +40,10 @@ public class Matchmaking : MonoBehaviour
 
     public void SearchForMatch()
     {
+        ActivateButtons(false);
         hostName = "";
         role = "guest";
-        isOpen = false;
+        //isOpen = false;
         matchID = matchIDInput.text;
         guestName = nicknameInput.text;
         GetLobbyStatus();
@@ -51,6 +53,7 @@ public class Matchmaking : MonoBehaviour
         } else if (!lobbyIsOpen)
         {
             matchDetails.text = "Die Lobby \"" + matchID + "\" ist nicht offen. \nBitte suche dir eine andere aus.";
+            ActivateButtons(true);
         }
         else
         {
@@ -73,8 +76,22 @@ public class Matchmaking : MonoBehaviour
         });
     }
 
+    void ActivateButtons(bool active)
+    {
+        if (active)
+        {
+            joinBtn.interactable = true;
+            hostBtn.interactable = true;
+        } else
+        {
+            joinBtn.interactable = false;
+            hostBtn.interactable = false;
+        }
+    }
+
     public void IsValidLobbyName()
     {
+        ActivateButtons(false);
         hostName = nicknameInput.text;
         matchID = matchIDInput.text;
         matchDetails.text = "";
@@ -89,6 +106,7 @@ public class Matchmaking : MonoBehaviour
             else
             {
                 matchDetails.text = "Match mit dem Namen " + matchID + " existiert bereits. \nBitte gib einen anderen Namen ein.";
+                ActivateButtons(true);
             }
         });
 
@@ -111,8 +129,8 @@ public class Matchmaking : MonoBehaviour
                     result = JSON.Parse(reply.Text);
                     matchDetails.text = "Name: " + result["matchID"] + "\n" +
                     "Player 1: " + result["hostName"] + "\n" +
-                    "Player 2: " + result["guestName"] + "\n" +
-                    "Level: " + result["level"];
+                    "Player 2: " + result["guestName"] + "\n";
+                    //+ "Level: " + result["level"];
                     if (result["isOpen"])
                     {
                         matchDetails.text += "Warten auf Spieler...";
