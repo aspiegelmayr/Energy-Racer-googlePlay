@@ -16,6 +16,11 @@ public class Match
     public string guestName;
     public int level;
 
+    public Match()
+    {
+        this.matchID = "error";
+    }
+
     public Match(string matchID, bool isOpen)
     {
         this.matchID = matchID;

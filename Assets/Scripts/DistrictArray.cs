@@ -21,10 +21,6 @@ public static class DistrictArray
             SetAllDistricts();
         }
 
-        if(_index == 0 && Board.isMultiplayer)
-        {
-            _index = 1;
-        }
         Debug.Log(_index);
         if (Board.isMultiplayer)
         {

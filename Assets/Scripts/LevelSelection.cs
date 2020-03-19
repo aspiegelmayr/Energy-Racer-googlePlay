@@ -58,8 +58,14 @@ public class LevelSelection : MonoBehaviour
             "4262\n25,80km²\n1 015\n630m",
             "4273\n17,20km²\n6 22\n842m",
         };
+        
+       
         int index = districtNum;
-        /// rowVal.text = districtInfo[index] + "\n" + DistrictArray.DisrictArr[index].PVs;
+
+        if (Board.isOnlineMultiplayer && Matchmaking.role == "guest")
+        {
+            index = Matchmaking.level;
+        }
 
         lat.text = "Laengengrad: " + 
             Math.Round(DistrictArray.DisrictArr[index].Latitude, 2);

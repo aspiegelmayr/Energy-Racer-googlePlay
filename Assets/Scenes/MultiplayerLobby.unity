@@ -1950,6 +1950,8 @@ MonoBehaviour:
   noInputText: {fileID: 1888261090}
   matchIDInput: {fileID: 888281152}
   nicknameInput: {fileID: 957314669}
+  hostBtn: {fileID: 1643937646}
+  joinBtn: {fileID: 417654326}
 --- !u!1 &1888261089
 GameObject:
   m_ObjectHideFlags: 0

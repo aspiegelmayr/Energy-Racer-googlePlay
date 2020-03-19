@@ -46,6 +46,10 @@ public class LocationService : MonoBehaviour
         SetDefaultCoords();
         SetUpBoard();
         curDistrictNumber = LevelSelection.districtNum;
+        if (Matchmaking.role == "guest")
+        {
+            curDistrictNumber = Matchmaking.level;
+        }
         DistrictArray.GetAllDistricts();
 
         curDistrict = DistrictArray.GetDistrict(curDistrictNumber);

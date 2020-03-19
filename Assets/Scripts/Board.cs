@@ -33,7 +33,7 @@ public class Board : MonoBehaviour
     public double hoursInADay;
     public double Clouds;
     public static int earnedCoins;
-    public int curDistr;
+    public static int curDistr;
     public int level;
 
     public Car activeCar;
@@ -82,6 +82,8 @@ public class Board : MonoBehaviour
                 player2Slider.image.sprite = opponentCar;
             } else
             {
+                curDistr = Matchmaking.level;
+                Debug.Log("lvl " + Matchmaking.level);
                 player2Slider.image.sprite = carImg;
                 slider.image.sprite = opponentCar;
                 curDistr = Matchmaking.level;
@@ -226,7 +228,6 @@ public class Board : MonoBehaviour
 
                 dot.transform.parent = transform;
                 dot.name = i + ", " + j;
-                Debug.Log("dot tag" + dot.tag + "; dot.name: " + dot.name);
                 allDots[i, j] = dot;
             }
         }
