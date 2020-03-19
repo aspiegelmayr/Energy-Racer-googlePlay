@@ -25,11 +25,21 @@ public class Matchmaking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        joined = false;
-        matchID = matchIDInput.text;
+        if (!Board.isOnlineMultiplayer)
+        {
+            joined = false;
+            matchID = matchIDInput.text;
 
-        noInputText.enabled = false;
-        notFoundText.enabled = false;
+            noInputText.enabled = false;
+            notFoundText.enabled = false;
+        }
+        else
+        {
+            Debug.Log("hu");
+            Debug.Log("hostname: " + hostName);
+            level = LevelSelection.districtNum;
+            PostMatch();
+        }
     }
 
     // Update is called once per frame
@@ -46,34 +56,41 @@ public class Matchmaking : MonoBehaviour
         //isOpen = false;
         matchID = matchIDInput.text;
         guestName = nicknameInput.text;
-        GetLobbyStatus();
         if (matchID == "" || guestName == "")
         {
             noInputText.enabled = true;
-        } else if (!lobbyIsOpen)
+        } else
         {
-            matchDetails.text = "Die Lobby \"" + matchID + "\" ist nicht offen. \nBitte suche dir eine andere aus.";
-            ActivateButtons(true);
-        }
-        else
-        {
-            GetMatchDetails(matchID);
+            RestClient.Get("https://energyracer.firebaseio.com/lobby/" + matchID + ".json").Then(response =>
+            {
+                var result = JSON.Parse(response.Text);
+                if (result["isOpen"])
+                {
+                    isOpen = true;
+                    Debug.Log("open");
+                    GetMatchDetails(matchID);
+                } else
+                {
+                    isOpen = false;
+                    matchDetails.text = "Die Lobby " + matchID + " ist nicht offen. Bitte suche dir eine andere aus.";
+                }
+            });
         }
     }
 
-    void GetLobbyStatus()
+    bool IsLobbyOpen()
     {
+        bool open = false;
         RestClient.Get("https://energyracer.firebaseio.com/lobby/" + matchID + ".json").Then(response =>
         {
             var result = JSON.Parse(response.Text);
             if (result["isOpen"])
             {
-                lobbyIsOpen = true;
-            } else
-            {
-                lobbyIsOpen = false;
+                open = true;
+                Debug.Log("opem");
             }
         });
+        return open;
     }
 
     void ActivateButtons(bool active)
@@ -101,7 +118,9 @@ public class Matchmaking : MonoBehaviour
             var result = JSON.Parse(response.Text);
             if (result == null)
             {
-                PostMatch();
+                role = "host";
+                Board.isOnlineMultiplayer = true;
+                SceneManager.LoadScene("DistrictSelect");
             }
             else
             {
@@ -123,7 +142,7 @@ public class Matchmaking : MonoBehaviour
             else
             {
                 var result = JSON.Parse(response.Text);
-                Match match = new Match(result["matchID"], result["hostName"], guestName, 0, 0, isOpen);
+                Match match = new Match(result["matchID"], result["hostName"], guestName, 0, 0, level, isOpen);
                 RestClient.Put("https://energyracer.firebaseio.com/lobby/" + id + ".json", match).Then(reply =>
                 {
                     result = JSON.Parse(reply.Text);
@@ -143,14 +162,7 @@ public class Matchmaking : MonoBehaviour
                     Board.isOnlineMultiplayer = true;
                     if (!result["isOpen"])
                     {
-                        Board.isOnlineMultiplayer = true;
-                        if(role == "host")
-                        {
-                            SceneManager.LoadScene("DistrictSelect");
-                        } else
-                        {
                             SceneManager.LoadScene("Game");
-                        }
           
                     }
                 });
@@ -188,8 +200,7 @@ public class Matchmaking : MonoBehaviour
             if (result["isOpen"] == false)
             {
                 guestName = result["guestName"];
-                Board.isOnlineMultiplayer = true;
-                SceneManager.LoadScene("DistrictSelect");
+                SceneManager.LoadScene("Game");
             }
         });
     }

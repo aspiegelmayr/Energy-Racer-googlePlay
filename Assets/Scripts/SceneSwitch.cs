@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using Proyecto26;
 
 public class SceneSwitch : MonoBehaviour
 {
@@ -18,16 +19,26 @@ public class SceneSwitch : MonoBehaviour
 
     public void GotoGameScene()
     {
-        if (SceneManager.GetActiveScene().name == "MultiplayerMenu")
+        if (!Board.isOnlineMultiplayer)
         {
-            Board.isMultiplayer = true;
-        }
-        else
-        {
-            Board.isMultiplayer = false;
-        }
+            if (SceneManager.GetActiveScene().name == "MultiplayerMenu")
+            {
+                Board.isMultiplayer = true;
+            }
+            else
+            {
+                Board.isMultiplayer = false;
+            }
 
-        SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Game");
+        } else
+        {
+            Debug.Log("loading scene");
+            RestClient.Put("https://energyracer.firebaseio.com/lobby/" + Matchmaking.matchID + "/level.json", 34).Then(response =>
+            {
+                SceneManager.LoadScene("MultiplayerLobby");
+            });
+        }
     }
 
     public void Update()
