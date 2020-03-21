@@ -837,10 +837,10 @@ MonoBehaviour:
   city: 
   hoursInADay: 0
   Clouds: 0
-  curDistr: 0
   level: 0
   carImg: {fileID: 0}
-  opponentCar: {fileID: 21300000, guid: 789a41cdc86ec4618ba0321f2dbe8151, type: 3}
+  localCar: {fileID: 21300000, guid: 9cbdd2e1297854670b8e0d8ebbf1e86e, type: 3}
+  opponentCar: {fileID: 21300000, guid: 3345ace94187e4a9ca9815ce1aca9582, type: 3}
   curPlayerText: {fileID: 1366747245}
   player2Slider: {fileID: 531580697}
   player2Name: {fileID: 1550702229}

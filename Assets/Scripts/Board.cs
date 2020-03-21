@@ -46,7 +46,7 @@ public class Board : MonoBehaviour
     public Sprite carImg;
 
     //multiplayer stuff
-    public Sprite opponentCar;
+    public Sprite localCar, opponentCar;
     public static bool isMultiplayer;
     public static bool isOnlineMultiplayer;
     public static string curPlayer;
@@ -79,12 +79,12 @@ public class Board : MonoBehaviour
             movesText.enabled = false;
             if(Matchmaking.role == "host")
             {
-                slider.image.sprite = carImg;
+                slider.image.sprite = localCar;
                 player2Slider.image.sprite = opponentCar;
             } else
             {
                 curDistr = Matchmaking.level;
-                player2Slider.image.sprite = carImg;
+                player2Slider.image.sprite = localCar;
                 slider.image.sprite = opponentCar;
                 curDistr = Matchmaking.level;
             }
