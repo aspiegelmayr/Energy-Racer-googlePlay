@@ -67,6 +67,15 @@ public class SceneSwitch : MonoBehaviour
 
     public void GoToDistrictSelectScene()
     {
+        if (SceneManager.GetActiveScene().name == "MultiplayerMenu")
+        {
+            Board.isMultiplayer = true;
+        }
+        else
+        {
+            Board.isMultiplayer = false;
+        }
+
         if (SceneManager.GetActiveScene().name == "GameWon")
         {
             if (DistrictSelection.curDistrict >= DistrictSelection.unlockedDistricts)

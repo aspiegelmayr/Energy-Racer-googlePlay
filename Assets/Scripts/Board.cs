@@ -63,6 +63,7 @@ public class Board : MonoBehaviour
     /// </summary>
     void Start()
     {
+        isMultiplayer = LevelSelection.isMultiplayer;
         if (isMultiplayer)
         {
             curPlayerText.text = curPlayer;
@@ -83,7 +84,6 @@ public class Board : MonoBehaviour
             } else
             {
                 curDistr = Matchmaking.level;
-                Debug.Log("lvl " + Matchmaking.level);
                 player2Slider.image.sprite = carImg;
                 slider.image.sprite = opponentCar;
                 curDistr = Matchmaking.level;
@@ -91,7 +91,16 @@ public class Board : MonoBehaviour
             playerName.text = Matchmaking.hostName;
             player2Name.text = Matchmaking.guestName;
             player2Slider.gameObject.SetActive(true);
-            InvokeRepeating("GetOpponentScore", 0.0f, 5f);
+            RestClient.Get("https://energyracer.firebaseio.com/lobby/" + Matchmaking.matchID + ".json").Then(response => {
+                var result = JSON.Parse(response.Text);
+                if(result == null)
+                {
+                    SceneManager.LoadScene("StartScene");
+                } else
+                {
+                    InvokeRepeating("GetOpponentScore", 0.0f, 5f);
+                }
+            });
         }
         else if(!isMultiplayer && !isOnlineMultiplayer)
         {
@@ -552,12 +561,12 @@ public class Board : MonoBehaviour
                 if(curScore >= neededScore)
                 {
                     earnedCoins = 20;
-                    DeleteDatabaseEntry();
+                    //DeleteDatabaseEntry();
                     SceneManager.LoadScene("GameWon");
                 } else if (curPlayer2Score >= neededScore)
                 {
                     earnedCoins = -10;
-                    DeleteDatabaseEntry();
+                    //DeleteDatabaseEntry();
                     SceneManager.LoadScene("GameOver"); 
                 } 
             } else
@@ -565,13 +574,13 @@ public class Board : MonoBehaviour
                 if (curScore >= neededScore)
                 {
                     earnedCoins = -10;
-                    DeleteDatabaseEntry();
+                    //DeleteDatabaseEntry();
                     SceneManager.LoadScene("GameOver");
                 }
                 else if (curPlayer2Score >= neededScore)
                 {
                     earnedCoins = 20;
-                    DeleteDatabaseEntry();
+                    //DeleteDatabaseEntry();
                     SceneManager.LoadScene("GameWon");
                 }
             }

@@ -62,4 +62,15 @@ public class Match
         this.guestName = guestName;
         this.level = level;
     }
+
+    public Match(string matchID, string hostName, string guestName, int hostScore, int guestScore, int level, bool isOpen, string hostReplay, string guestReplay)
+    {
+        this.matchID = matchID;
+        this.hostScore = hostScore;
+        this.guestScore = guestScore;
+        this.isOpen = isOpen;
+        this.hostName = hostName;
+        this.guestName = guestName;
+        this.level = level;
+    }
 }

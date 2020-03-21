@@ -29,6 +29,7 @@ public class MultiplayerMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Board.isMultiplayer = true;
         selectedButtonIndices = new int[2];
         splitArrays();
         HideButtonBackgrounds();
@@ -41,14 +42,14 @@ public class MultiplayerMenu : MonoBehaviour
         }
     }
 
-    private void CheckSelection()
+    public void CheckSelection()
     {
         CheckNicknames();
         if (Player1HasSelected() && Player2HasSelected() && validNicknames)
         {
             errorMessage.enabled = false;
-            Board.isMultiplayer = true;
             SubmitNicknames();
+            Board.isMultiplayer = true;
             SceneManager.LoadScene("DistrictSelect");
         }
         else

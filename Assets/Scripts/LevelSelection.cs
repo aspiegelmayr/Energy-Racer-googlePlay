@@ -14,6 +14,7 @@ public class LevelSelection : MonoBehaviour
     public Text districtText;
     public GameObject coatOfArms;
     public Text lat, lon, area, residents, pvas;
+    public static bool isMultiplayer;
 
     private string[] districtInfo;
 
@@ -21,6 +22,11 @@ public class LevelSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("ismulti: " + Board.isMultiplayer);
+        if (Board.isMultiplayer)
+        {
+            isMultiplayer = true;
+        }
         if (districtName == null)
         {
             districtName = "Nichts gefunden";

@@ -310,6 +310,7 @@ MonoBehaviour:
   warningText: {fileID: 2138401077}
   sendBtn: {fileID: 218583176}
   districtText: {fileID: 66256457}
+  submitBtn: {fileID: 218583176}
   period: 10
 --- !u!4 &154951822
 Transform:

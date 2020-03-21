@@ -46,11 +46,6 @@ public class LeaderboardManager : MonoBehaviour
         InvokeRepeating("GetData", 0.0f, 10f);
     }
 
-    private void Update()
-    {
-  
-    }
-
     public void SendToDatabase()
     {
         submitBtn.interactable = false;
@@ -88,15 +83,30 @@ public class LeaderboardManager : MonoBehaviour
             leaderboardNames.text = "";
             leaderboardScores.text = "";
             var result = JSON.Parse(response.Text);
+
             for (int i = 0; i < 10; i++)
             {
-                scorelist.Add(new UserData(result[i]["username"], result[i]["score"]));
+                if(result[i] != null) {
+                    scorelist.Add(new UserData(result[i]["username"], result[i]["score"]));
+                } else
+                {
+                    scorelist.Add(new UserData("no entry"));
+                }
             }
+
             scorelist = scorelist.OrderByDescending(x => x.score).ToList();
             foreach (var entry in scorelist)
             {
-                leaderboardNames.text += entry.username + "\n";
-                leaderboardScores.text += entry.score + "\n";
+                if (entry.username == "no entry")
+                {
+                    leaderboardNames.text += " \n";
+                    leaderboardScores.text += " \n";
+                }
+                else
+                {
+                    leaderboardNames.text += entry.username + "\n";
+                    leaderboardScores.text += entry.score + "\n";
+                }
             }
         });
     }

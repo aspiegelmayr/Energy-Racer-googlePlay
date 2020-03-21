@@ -26,6 +26,8 @@ public class StartGame : MonoBehaviour
     /// </summary>
     void Start()
     {
+        Board.isMultiplayer = false;
+        Board.isOnlineMultiplayer = false;
         multiplayerPanel.SetActive(false);
         cars = new Car[3];
         upgrades = new Upgrade[3];

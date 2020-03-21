@@ -11,13 +11,6 @@ public class GameWon : MonoBehaviour
     void Start()
     {
         GameObject obj = Instantiate(confettiObj);
-
-        /**
-        GameObject spriteObj = new GameObject();
-        SpriteRenderer renderer = spriteObj.AddComponent<SpriteRenderer>();
-        renderer.sprite = sprite;
-        */
-
         Destroy(obj, 6.0f);
     }
 }

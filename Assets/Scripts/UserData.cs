@@ -16,4 +16,9 @@ public class UserData
         this.username = username;
         this.score = score;
     }
+
+    public UserData(string username)
+    {
+        this.username = username;
+    }
 }
