@@ -34,7 +34,7 @@ using UnityEngine;
     /// finds matches, changes color of matched dots
     /// </summary>     void Update()
     {
-        FindMatches();
+        //FindMatches();
         if (isMatched)
         {
             SpriteRenderer spriteRender = GetComponent<SpriteRenderer>();             spriteRender.color = new Color(0f, 0f, 0f, .2f);
