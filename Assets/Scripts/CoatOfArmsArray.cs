@@ -8,6 +8,10 @@ public class CoatOfArmsArray : MonoBehaviour
     public Sprite[] CoatOfArmsArr = new Sprite[DistrictNumber];
     public Image coatOfArmsImg;
 
+    public Sprite[] getArray()
+    {
+        return CoatOfArmsArr;
+    }
 
     public Sprite GetCoatOfArms(int _index)
     {

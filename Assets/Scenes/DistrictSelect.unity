@@ -968,7 +968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &298403245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,6 +1021,9 @@ MonoBehaviour:
   button: {fileID: 0}
   allButtons: []
   scrollRect: {fileID: 0}
+  dialogCanvas: {fileID: 0}
+  coa: {fileID: 0}
+  coaImg: {fileID: 1926386252}
 --- !u!114 &298403248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3238,6 +3241,9 @@ MonoBehaviour:
   - {fileID: 1869247849}
   - {fileID: 2110551903}
   scrollRect: {fileID: 648062573}
+  dialogCanvas: {fileID: 298403244}
+  coa: {fileID: 0}
+  coaImg: {fileID: 0}
 --- !u!1 &1083795877
 GameObject:
   m_ObjectHideFlags: 0

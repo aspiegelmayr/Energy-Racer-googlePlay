@@ -22,6 +22,7 @@ using UnityEngine;
     /// set position of dot
     /// </summary>     void Start()
     {
+
         board = FindObjectOfType<Board>();
         targetX = (int)transform.position.x;
         targetY = (int)transform.position.y;

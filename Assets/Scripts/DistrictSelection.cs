@@ -16,12 +16,16 @@ public class DistrictSelection : MonoBehaviour
     public List<Button> allButtons;
     public PinchableScrollRect scrollRect;
     public District[] districts;
+    public GameObject dialogCanvas;
+    public Sprite[] coa;
+    public Image coaImg;
 
     /// <summary>
     /// display district name, deactivate buttons for locked levels
     /// </summary>
     void Start()
     {
+        dialogCanvas.SetActive(false);
         districts = DistrictArray.GetAllDistricts();
         curDistrict = 1;
     }
@@ -31,6 +35,7 @@ public class DistrictSelection : MonoBehaviour
         string tag = EventSystem.current.currentSelectedGameObject.tag;
         curDistrict = int.Parse(tag) - 1;
         districtName.text = DistrictArray.GetDistrict(curDistrict).Name;
+        coaImg.sprite = coa[curDistrict];
         LevelSelection.districtNum = curDistrict;
         LevelSelection.districtName = EventSystem.current.currentSelectedGameObject.name;
     }
