@@ -845,6 +845,7 @@ MonoBehaviour:
   player2Slider: {fileID: 531580697}
   player2Name: {fileID: 1550702229}
   winner: 
+  playerNickname: {fileID: 0}
 --- !u!114 &579608681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1552,7 +1553,7 @@ GameObject:
   - component: {fileID: 1366747246}
   - component: {fileID: 1366747245}
   m_Layer: 5
-  m_Name: FixedText
+  m_Name: districtName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -57,6 +57,7 @@ public class Board : MonoBehaviour
     public string winner;
     public static string player1Nickname;
     public static string player2Nickname;
+    public Text playerNickname;
 
     /// <summary>
     /// the game board is initialized, dots and background tiles are created
@@ -64,6 +65,7 @@ public class Board : MonoBehaviour
     void Start()
     {
         isMultiplayer = LevelSelection.isMultiplayer;
+        playerNickname.enabled = false;
         if (isMultiplayer)
         {
             curPlayerText.text = curPlayer;
@@ -72,6 +74,9 @@ public class Board : MonoBehaviour
             player2Name.text = player2Nickname;
             player2Slider.gameObject.SetActive(true);
             player2Slider.image.sprite = MultiplayerMenu.player2Sprite;
+            coinsText.enabled = false;
+            playerNickname.text = curPlayer;
+            playerNickname.enabled = true;
         }
         else if (isOnlineMultiplayer)
         {
@@ -526,6 +531,8 @@ public class Board : MonoBehaviour
         {
             Board.curPlayer = player1Nickname;
         }
+
+        playerNickname.text = curPlayer;
     }
 
     /// <summary>
