@@ -1367,8 +1367,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1570926701}
-        m_MethodName: GoToDistrictSelectScene
+      - m_Target: {fileID: 1765814984}
+        m_MethodName: CheckSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

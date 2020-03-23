@@ -34,10 +34,10 @@ public class DistrictSelection : MonoBehaviour
     {
         string tag = EventSystem.current.currentSelectedGameObject.tag;
         curDistrict = int.Parse(tag) - 1;
-        districtName.text = DistrictArray.GetDistrict(curDistrict).Name;
+        districtName.text = districts[curDistrict].Name;
         coaImg.sprite = coa[curDistrict];
         LevelSelection.districtNum = curDistrict;
+        Debug.Log(curDistrict);
         LevelSelection.districtName = EventSystem.current.currentSelectedGameObject.name;
     }
 }
-
