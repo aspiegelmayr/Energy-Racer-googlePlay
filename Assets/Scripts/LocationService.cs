@@ -61,7 +61,7 @@ public class LocationService : MonoBehaviour
         GetWeatherData(curDistrict.Latitude, curDistrict.Longitude);
         SetLevelDifficulty();
         SetNeededScore();
-        location.text = curDistrict.Name;
+        //location.text = curDistrict.Name;
         level.text = "LEVEL: " + levelDifficulty.ToString();
         level.color = SetLevelTextColor();
         board.Setup(7, 7, 20, neededScore, levelDifficulty);

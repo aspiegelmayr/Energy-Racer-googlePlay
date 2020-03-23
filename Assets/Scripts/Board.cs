@@ -35,6 +35,7 @@ public class Board : MonoBehaviour
     public static int earnedCoins;
     public static int curDistr;
     public int level;
+    public Text location;
 
     public Car activeCar;
 
@@ -64,6 +65,7 @@ public class Board : MonoBehaviour
     /// </summary>
     void Start()
     {
+        location.text = LevelSelection.districtName;
         isMultiplayer = LevelSelection.isMultiplayer;
         playerNickname.enabled = false;
         if (isMultiplayer)
