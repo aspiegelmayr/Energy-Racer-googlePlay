@@ -1022,7 +1022,7 @@ MonoBehaviour:
   allButtons: []
   scrollRect: {fileID: 0}
   dialogCanvas: {fileID: 0}
-  coa: {fileID: 0}
+  coa: []
   coaImg: {fileID: 1926386252}
 --- !u!114 &298403248
 MonoBehaviour:
@@ -3242,8 +3242,35 @@ MonoBehaviour:
   - {fileID: 2110551903}
   scrollRect: {fileID: 648062573}
   dialogCanvas: {fileID: 298403244}
-  coa: {fileID: 0}
-  coaImg: {fileID: 0}
+  coa:
+  - {fileID: 21300000, guid: aa56c18524cc64dd88a6f6a9a9bf0cd1, type: 3}
+  - {fileID: 21300000, guid: 6cd3380ba514f4cae8062a511d4ebfaa, type: 3}
+  - {fileID: 21300000, guid: e17f0544e79c44d81bcaf23208d8ef33, type: 3}
+  - {fileID: 21300000, guid: 93036608a74fa441c94a0da357b40423, type: 3}
+  - {fileID: 21300000, guid: 1a29cd50737bf49d18f7edaeaaedc35d, type: 3}
+  - {fileID: 21300000, guid: 66611e41c04494119a247bd4dbccc23b, type: 3}
+  - {fileID: 21300000, guid: ba4dc845abb24486690e74587cc96d55, type: 3}
+  - {fileID: 21300000, guid: 0f64687fe0d9b4a6686363594b1d67d9, type: 3}
+  - {fileID: 21300000, guid: 2144af70c455040d1835ddc46bf8f8ad, type: 3}
+  - {fileID: 21300000, guid: 02907e439682a46acbc802651b6d1e77, type: 3}
+  - {fileID: 21300000, guid: dc4397ee0347b4ef99d4aeed9f04d28e, type: 3}
+  - {fileID: 21300000, guid: 05ab2b61a68b6467b83ee18d559fb823, type: 3}
+  - {fileID: 21300000, guid: d971ad2f7f108384f8be081aa0cf9847, type: 3}
+  - {fileID: 21300000, guid: 9c02fef74676d5242b8df69e919fb684, type: 3}
+  - {fileID: 21300000, guid: f15652252329a456c8a983c9389ce79d, type: 3}
+  - {fileID: 21300000, guid: 60c2222a865bb4266ba14ebe91adfe97, type: 3}
+  - {fileID: 21300000, guid: 6ddf8262b17c94aecb54a0d9ef1e36aa, type: 3}
+  - {fileID: 21300000, guid: fd6b0420c7d634404af679f54ee3e664, type: 3}
+  - {fileID: 21300000, guid: 573501c12499749d3afb99369a5528c6, type: 3}
+  - {fileID: 21300000, guid: 945bc9cd80db548df98144eb01131988, type: 3}
+  - {fileID: 21300000, guid: 26f55f3c45e7c4367b98f33b64aaa3a5, type: 3}
+  - {fileID: 21300000, guid: bf0f5d5fe0a8d3d45a59497b4dc2a986, type: 3}
+  - {fileID: 21300000, guid: 26904e8984ad54eb89768a2c9eb37c0a, type: 3}
+  - {fileID: 21300000, guid: e0f90408dc4d54a4981ee26bdf7d42ee, type: 3}
+  - {fileID: 21300000, guid: d707fc018bd0f874fba2ad7e62425e6a, type: 3}
+  - {fileID: 21300000, guid: 3bc1aa5d33cb44ffd8afa49982b72be7, type: 3}
+  - {fileID: 21300000, guid: cd067798bc9584504adca842e584b1a0, type: 3}
+  coaImg: {fileID: 1926386252}
 --- !u!1 &1083795877
 GameObject:
   m_ObjectHideFlags: 0
