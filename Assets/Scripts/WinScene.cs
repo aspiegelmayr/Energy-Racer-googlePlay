@@ -14,12 +14,10 @@ public class WinScene : MonoBehaviour
     {
         if (Board.isMultiplayer)
         {
-            winnerText.text = Board.curPlayer;
-            winText.text = "gewinnt!";
+            winnerText.text = Board.curPlayer + ",";
         } else
         {
-            winnerText.text = "Gewonnen!";
-            winText.text = "";
+            winnerText.text = "";
         }
     }
 

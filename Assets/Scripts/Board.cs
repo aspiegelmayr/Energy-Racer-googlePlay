@@ -120,7 +120,7 @@ public class Board : MonoBehaviour
         gameController = GameObject.Find("GameController");
 
         earnedCoins = 30;
-        coinsText.text = "Coins: " + earnedCoins;
+        coinsText.text = earnedCoins.ToString();
 
         width = 7;
         height = 7;
@@ -130,15 +130,7 @@ public class Board : MonoBehaviour
         locationService = gameController.GetComponent<LocationService>();
         locationService.SendWeatherRequest();
 
-        if (remainingMoves == 1)
-        {
-            movesText.text = remainingMoves + " Move";
-        }
-        else
-        {
-            movesText.text = remainingMoves + " Moves";
-        }
-
+        movesText.text = remainingMoves.ToString();
         if (!isMultiplayer && !isOnlineMultiplayer)
         {
             carImg = StartGame.activeCar.img;
@@ -156,14 +148,7 @@ public class Board : MonoBehaviour
         {
             level = GetLevel();
         }
-        if (remainingMoves == 1)
-        {
-            movesText.text = remainingMoves + " Move";
-        }
-        else
-        {
-            movesText.text = remainingMoves + " Moves";
-        }
+            movesText.text = remainingMoves.ToString();
     }
 
     public int GetLevel()
@@ -399,7 +384,7 @@ public class Board : MonoBehaviour
                     }
                     else
                     {
-                        movesText.text = remainingMoves + " Moves";
+                        movesText.text = remainingMoves.ToString();
                     }
                     if (curScore >= neededScore)
                     {
@@ -604,7 +589,7 @@ public class Board : MonoBehaviour
             earnedCoins = 20;
         }
 
-        coinsText.text = "coins: " + earnedCoins;
+        coinsText.text = earnedCoins.ToString();
     }
 
     void GetOpponentScore()

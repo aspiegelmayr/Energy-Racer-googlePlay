@@ -13,25 +13,26 @@ public class Matchmaking : MonoBehaviour
     public static string hostName;
     public static string guestName;
     public static string role;
-    public Text notFoundText, noInputText;
+    public Text notFoundText, noInputText, nameTakenWarning, closedLobbyWarning;
     public InputField matchIDInput, nicknameInput;
     bool isOpen;
     public static int level;
     public Button hostBtn, joinBtn;
     public GameObject warningPanel;
     public Button yesBtn, noBtn;
+ 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        warningPanel.SetActive(false);
+        //warningPanel.SetActive(false);
         if(role == "host")
         {
             ActivateButtons(false);
         }
-        noInputText.enabled = false;
-        notFoundText.enabled = false;
+
+        HideWarnings();
 
         if (!Board.isOnlineMultiplayer)
         {
@@ -44,8 +45,17 @@ public class Matchmaking : MonoBehaviour
         }
     }
 
+    void HideWarnings()
+    {
+        noInputText.enabled = false;
+        notFoundText.enabled = false;
+        nameTakenWarning.enabled = false;
+        closedLobbyWarning.enabled = false;
+    }
+
     public void SearchForMatch()
     {
+        HideWarnings();
         ActivateButtons(false);
         hostName = "";
         role = "guest";
@@ -67,7 +77,7 @@ public class Matchmaking : MonoBehaviour
                 } else
                 {
                     isOpen = false;
-                    matchDetails.text = "Die Lobby " + matchID + " ist nicht offen. Bitte suche dir eine andere aus.";
+                    closedLobbyWarning.enabled = true;
                 }
             });
         }
@@ -108,6 +118,7 @@ public class Matchmaking : MonoBehaviour
 
     public void IsValidLobbyName()
     {
+        HideWarnings();
         ActivateButtons(false);
         hostName = nicknameInput.text;
         matchID = matchIDInput.text;
@@ -124,7 +135,8 @@ public class Matchmaking : MonoBehaviour
             }
             else
             {
-                matchDetails.text = "Match mit dem Namen " + matchID + " existiert bereits. \nBitte gib einen anderen Namen ein.";
+                //matchDetails.text = "Match mit dem Namen " + matchID + " existiert bereits. \nBitte gib einen anderen Namen ein.";
+                nameTakenWarning.enabled = true;
                 ActivateButtons(true);
             }
         });
@@ -133,6 +145,7 @@ public class Matchmaking : MonoBehaviour
 
     void GetMatchDetails(string id)
     {
+        HideWarnings();
         RestClient.Get("https://energyracer.firebaseio.com/lobby/" + id + ".json").Then(response =>
         {
             if (response == null)
@@ -148,7 +161,7 @@ public class Matchmaking : MonoBehaviour
                     match = new Match(result["matchID"], result["hostName"], guestName, 0, 0, level, isOpen);
                 } else
                 {
-                    match = new Match(result["matchID"], result["hostName"], guestName, 0, 0, result["level"], false);
+                    match = new Match(result["matchID"], result["hostName"], guestName, 0, 0, result["level"]+1, false);
                 }
                 RestClient.Put("https://energyracer.firebaseio.com/lobby/" + id + ".json", match).Then(reply =>
                 {
@@ -160,7 +173,7 @@ public class Matchmaking : MonoBehaviour
                     level = result["level"];
                     if (result["isOpen"])
                     {
-                        matchDetails.text += "Warten auf Spieler...";
+                        matchDetails.text += "Waiting...";
                     }
                     hostName = result["hostName"];
                     Board.curDistr = level;

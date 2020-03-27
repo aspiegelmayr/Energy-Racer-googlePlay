@@ -13,7 +13,7 @@ public class LevelSelection : MonoBehaviour
     public GameObject button;
     public Text districtText;
     public GameObject coatOfArms;
-    public Text lat, lon, area, residents, pvas;
+    public Text infoTxt;
     public static bool isMultiplayer;
 
     private string[] districtInfo;
@@ -22,14 +22,13 @@ public class LevelSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("ismulti: " + Board.isMultiplayer);
         if (Board.isMultiplayer)
         {
             isMultiplayer = true;
         }
         if (districtName == null)
         {
-            districtName = "Nichts gefunden";
+            districtName = "Error";
         }
         districtText.text = districtName;
 
@@ -73,16 +72,11 @@ public class LevelSelection : MonoBehaviour
             index = Matchmaking.level;
         }
 
-        lat.text = "Laengengrad: " + 
-            Math.Round(DistrictArray.DisrictArr[index].Latitude, 2);
-        lon.text = "Breitengrad: " + 
-            Math.Round(DistrictArray.DisrictArr[index].Longitude, 2);
-        area.text = "Flaeche: " + 
-            Math.Round(DistrictArray.DisrictArr[index].Area, 2) + "km²";
-        residents.text = "Einwohnerzahl: " 
-            + DistrictArray.DisrictArr[index].Residents;
-        pvas.text = "PV-Anlagen pro Einwohner: " 
-            + Math.Round(DistrictArray.DisrictArr[index].PVs);
+        infoTxt.text =  Math.Round(DistrictArray.DisrictArr[index].Latitude, 2) + "\n" +
+        Math.Round(DistrictArray.DisrictArr[index].Longitude, 2) + "\n" + 
+        Math.Round(DistrictArray.DisrictArr[index].Area, 2) + "km² \n" +
+        DistrictArray.DisrictArr[index].Residents + "\n" +
+        Math.Round(DistrictArray.DisrictArr[index].PVs);
     }
 
     public void SetCoatOfArms()

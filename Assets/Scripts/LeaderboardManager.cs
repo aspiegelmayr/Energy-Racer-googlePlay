@@ -52,7 +52,6 @@ public class LeaderboardManager : MonoBehaviour
         if (nameInput.text == "")
         {
             warningText.enabled = true;
-            warningText.text = "Bitte Namen eingeben!";
         }
         else
         {
