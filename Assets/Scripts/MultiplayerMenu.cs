@@ -56,15 +56,15 @@ public class MultiplayerMenu : MonoBehaviour
         {
             if (!Player1HasSelected() && Player2HasSelected())
             {
-                errorMessage.text = "Spieler 1, bitte waehle ein Auto";
+                errorMessage.text = "Spieler 1, bitte wähle ein Auto";
             }
             else if (!Player2HasSelected() && Player1HasSelected())
             {
-                errorMessage.text = "Spieler 2, bitte waehle ein Auto";
+                errorMessage.text = "Spieler 2, bitte wähle ein Auto";
             }
             else if (!Player2HasSelected() && !Player1HasSelected())
             {
-                errorMessage.text = "Bitte waehlt eure Autos";
+                errorMessage.text = "Bitte wählt eure Autos";
             }
            
         }

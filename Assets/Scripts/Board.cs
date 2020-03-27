@@ -152,14 +152,6 @@ public class Board : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        /**
-        * if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Game"))
-        * {
-        *    int difficulty = LocationService.GetLevelDifficulty();
-        *    SceneBackgroundInformation.SetBackground(difficulty);
-        *  //  backgroundIsSet = true;
-        *}
-        */
         if (level == 0)
         {
             level = GetLevel();
@@ -337,35 +329,20 @@ public class Board : MonoBehaviour
             if (allDots[col, row].tag == "Battery" || allDots[col, row].tag == "Sun" ||
                 allDots[col, row].tag == "Plug")
             {
-                if (isMultiplayer)
+                if (!isMultiplayer && !isOnlineMultiplayer ||
+                    isMultiplayer && curPlayer == player1Nickname ||
+                    isOnlineMultiplayer && Matchmaking.role == "host")
                 {
-                    if (curPlayer == player1Nickname)
-                    {
-                        curScore++;
-                    }
-                    else
-                    {
-                        curPlayer2Score++;
-                    }
-                }
-                else if (isOnlineMultiplayer)
-                {
-                    if(Matchmaking.role == "host")
-                    {
-                        curScore++;
-                    } else
-                    {
-                        curPlayer2Score++;
-                    }
-                    
-                    slider.value = curScore;
-                    player2Slider.value = curPlayer2Score;
-                    PostScore();
+                    curScore++;
                 }
                 else
                 {
-                    curScore++;
-                    slider.value = curScore;
+                    curPlayer2Score++;  
+                }
+                slider.value = curScore;
+                if(isOnlineMultiplayer || isMultiplayer)
+                {
+                    player2Slider.value = curPlayer2Score;
                 }
             }
             else if (allDots[col, row].tag == "Rain" || allDots[col, row].tag == "Cloud")
@@ -570,12 +547,10 @@ public class Board : MonoBehaviour
                 if(curScore >= neededScore)
                 {
                     earnedCoins = 20;
-                    //DeleteDatabaseEntry();
                     SceneManager.LoadScene("GameWon");
                 } else if (curPlayer2Score >= neededScore)
                 {
                     earnedCoins = -10;
-                    //DeleteDatabaseEntry();
                     SceneManager.LoadScene("GameOver"); 
                 } 
             } else
@@ -583,13 +558,17 @@ public class Board : MonoBehaviour
                 if (curScore >= neededScore)
                 {
                     earnedCoins = -10;
-                    //DeleteDatabaseEntry();
                     SceneManager.LoadScene("GameOver");
                 }
                 else if (curPlayer2Score >= neededScore)
                 {
                     earnedCoins = 20;
-                    //DeleteDatabaseEntry();
+
+
+
+
+
+
                     SceneManager.LoadScene("GameWon");
                 }
             }
@@ -637,6 +616,7 @@ public class Board : MonoBehaviour
             if (Matchmaking.role == "host")
             {
                 curPlayer2Score = result["guestScore"];
+                player2Slider.value = curPlayer2Score;
 
             }
             else

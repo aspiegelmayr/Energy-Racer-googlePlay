@@ -15,37 +15,33 @@ public class Matchmaking : MonoBehaviour
     public static string role;
     public Text notFoundText, noInputText;
     public InputField matchIDInput, nicknameInput;
-    bool joined;
-    bool lobbyIsOpen;
     bool isOpen;
     public static int level;
     public Button hostBtn, joinBtn;
+    public GameObject warningPanel;
+    public Button yesBtn, noBtn;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        warningPanel.SetActive(false);
+        if(role == "host")
+        {
+            ActivateButtons(false);
+        }
         noInputText.enabled = false;
         notFoundText.enabled = false;
 
         if (!Board.isOnlineMultiplayer)
         {
-            joined = false;
             matchID = matchIDInput.text;
         }
         else
         {
-            Debug.Log("hu");
-            Debug.Log("hostname: " + hostName);
             level = LevelSelection.districtNum;
             PostMatch();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SearchForMatch()
@@ -74,6 +70,25 @@ public class Matchmaking : MonoBehaviour
                     matchDetails.text = "Die Lobby " + matchID + " ist nicht offen. Bitte suche dir eine andere aus.";
                 }
             });
+        }
+    }
+
+    public void BackButtonPressed()
+    {
+        warningPanel.SetActive(true);
+    }
+
+    public void ReturnToMenu(bool ret)
+    {
+        if (ret)
+        {
+            RestClient.Delete("https://energyracer.firebaseio.com/lobby/" + Matchmaking.matchID + ".json").Then(response => {
+                role = "";
+                SceneManager.LoadScene("StartScene");
+            });
+        } else
+        {
+            warningPanel.SetActive(false);
         }
     }
 
@@ -141,10 +156,8 @@ public class Matchmaking : MonoBehaviour
                     matchDetails.text = "Name: " + result["matchID"] + "\n" +
                     "Player 1: " + result["hostName"] + "\n" +
                     "Player 2: " + result["guestName"] + "\n"
-                    + "Level: " + result["level"];
+                    + "Level: " + result["level"] + "\n";
                     level = result["level"];
-                    Debug.Log(result["level"]);
-                    Debug.Log("level " + level);
                     if (result["isOpen"])
                     {
                         matchDetails.text += "Warten auf Spieler...";
@@ -165,7 +178,6 @@ public class Matchmaking : MonoBehaviour
     private void PostMatch()
     {
             guestName = "";
-            joined = false;
             role = "host";
         if (matchID == "" || hostName == "")
         {
