@@ -120,6 +120,209 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &263938453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 263938455}
+  - component: {fileID: 263938454}
+  m_Layer: 0
+  m_Name: LeanLocalization
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &263938454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263938453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806f0696300aeac44a0e17efee222854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultLanguage: 
+  DetectLanguage: 1
+  SaveLanguage: 0
+  languages:
+  - name: English
+    cultures:
+    - en
+    - en-GB
+    - en-US
+    - en-AU
+    - en-CA
+    - en-NZ
+    - en-IE
+    - en-ZA
+    - en-JM
+    - en-en029
+    - en-BZ
+    - en-BZ
+    - en-TT
+    - en-ZW
+    - en-PH
+  - name: German
+    cultures:
+    - de
+    - de-DE
+    - de-CH
+    - de-AT
+    - de-LU
+    - de-LI
+  prefabs: []
+--- !u!4 &263938455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263938453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 267929979}
+  - {fileID: 289779245}
+  - {fileID: 827044240}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &267929978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 267929979}
+  - component: {fileID: 267929980}
+  m_Layer: 0
+  m_Name: BackBtn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &267929979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267929978}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 263938455}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &267929980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267929978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: Back to Menu
+    Object: {fileID: 0}
+  - Language: German
+    Text: "Zur\xFCck zum Men\xFC"
+    Object: {fileID: 0}
+--- !u!1 &289779244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 289779245}
+  - component: {fileID: 289779246}
+  m_Layer: 0
+  m_Name: DescTxt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &289779245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289779244}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 263938455}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &289779246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289779244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: German
+    Text: "Wenn du auf \u201CSpielen\u201D klickst, erscheint eine Karte vom Bezirk
+      Freistadt. W\xE4hle nun ein Level aus.\n\nIm Spiel musst du benachbarte Symbole
+      miteinander tauschen, damit du 3 oder mehr gleiche in eine Reihe oder Spalte
+      bringst. Gelingt das, verschwinden diese Symbole.\n\nZiel des Spiels ist es,
+      das E-Auto mit gr\xFCnen Symbolen aufzuladen und es ans andere Ende zu bringen.Sind
+      die zusammenpassenden Symbole gr\xFCn, bewegt sich das Auto Richtung Ziel. Aber
+      Achtung: Wenn du rote Symbole zum Verschwinden bringst, f\xE4hrt das Auto wieder
+      zur\xFCck!\n\nJe nach aktuellem Wetter erscheinen mehr oder weniger gr\xFCne
+      und rote Symbole, versuche also das Spiel wenn m\xF6glich bei Sch\xF6nwetter
+      zu spielen!\n\nNachdem du einen Level geschafft hast, bekommst du M\xFCnzen.
+      Wenn dir ein Level Probleme bereitet, kannst du mit diesen M\xFCnzen Upgrades
+      oder schnellere Autos im Shop kaufen.\n\n\nDEVELOPMENT:\nAnna Spiegelmayr &
+      \nBernadette Theuretzbachner \nf\xFCr Energie Bezirk Freistadt\n\nMUSIK:\n\"Game
+      background Music loop short\" &  \"Game lobby screen background music\" von
+      yummie @ freesound.org\n\nFONT:\nPixellari von Zacchary Dempsey-Plate @ dafont.com\n\n\n\n"
+    Object: {fileID: 0}
+  - Language: English
+    Text: "When you press \"Play\" a map of the Freistadt area is displayed. Now you
+      can choose a level.\n\nIn the game you have to swap two adjacent pieces in order
+      to get 3 or more of the same type in a row or column. If you succeed, these
+      icons disappear.\n\nThe aim of this game is to charge your electric car by matching
+      green icons and to get it to the finish. But be cautious: If you match red icons,
+      the car moves backwards!\n\nDepending on the current weather the amount of green
+      and red symbols varies, so try to play the game when it is sunny.\n\nWhen you
+      have completed a level you get coins. If you have problems winning a level,
+      you can get upgrades or faster cars in the shop.\n\n\nDEVELOPMENT:\nAnna Spiegelmayr
+      & \nBernadette Theuretzbachner \nfor the organization Energie Bezirk Freistadt\n\nMUSIC:\n\"Game
+      background Music loop short\" & \"Game lobby screen background music\" by yummie
+      @ freesound.org\n\nFONT:\nPixellari by Zacchary Dempsey-Plate @ dafont.com\n\n\n\n"
+    Object: {fileID: 0}
 --- !u!1 &642588178
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +334,7 @@ GameObject:
   - component: {fileID: 642588179}
   - component: {fileID: 642588181}
   - component: {fileID: 642588180}
+  - component: {fileID: 642588182}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -188,7 +392,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Spielanleitung
+  m_Text: Tutorial
 --- !u!222 &642588181
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -197,6 +401,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 642588178}
   m_CullTransparentMesh: 0
+--- !u!114 &642588182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642588178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee4021ce59f313499a5cab041f02aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: Title
+  FallbackText: Spielanleitung
+--- !u!1 &827044239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 827044240}
+  - component: {fileID: 827044241}
+  m_Layer: 0
+  m_Name: Title
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &827044240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827044239}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 263938455}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &827044241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827044239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: Tutorial
+    Object: {fileID: 0}
+  - Language: German
+    Text: Spielanleitung
+    Object: {fileID: 0}
 --- !u!1 &1161454662
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,6 +609,7 @@ GameObject:
   - component: {fileID: 1169990310}
   - component: {fileID: 1169990312}
   - component: {fileID: 1169990311}
+  - component: {fileID: 1169990313}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -397,7 +667,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Zur\xFCck zum Men\xFC"
+  m_Text: Back to Menu
 --- !u!222 &1169990312
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -406,6 +676,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169990309}
   m_CullTransparentMesh: 0
+--- !u!114 &1169990313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169990309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee4021ce59f313499a5cab041f02aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: BackBtn
+  FallbackText: "Zur\xFCck zum Men\xFC"
 --- !u!1 &1187948389
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +737,7 @@ GameObject:
   - component: {fileID: 1346807903}
   - component: {fileID: 1346807905}
   - component: {fileID: 1346807904}
+  - component: {fileID: 1346807906}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -510,8 +795,41 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Wenn du auf \u201CSpielen\u201D klickst, erscheint eine Karte vom Bezirk
-    Freistadt. W\xE4hle nun eines der freigeschalteten Levels aus. Freigeschaltete
+  m_Text: "When you press \"Play\" a map of the Freistadt area is displayed. Now you
+    can choose a level.\n\nIn the game you have to swap two adjacent pieces in order
+    to get 3 or more of the same type in a row or column. If you succeed, these icons
+    disappear.\n\nThe aim of this game is to charge your electric car by matching
+    green icons and to get it to the finish. But be cautious: If you match red icons,
+    the car moves backwards!\n\nDepending on the current weather the amount of green
+    and red symbols varies, so try to play the game when it is sunny.\n\nWhen you
+    have completed a level you get coins. If you have problems winning a level, you
+    can get upgrades or faster cars in the shop.\n\n\nDEVELOPMENT:\nAnna Spiegelmayr
+    & \nBernadette Theuretzbachner \nfor the organization Energie Bezirk Freistadt\n\nMUSIC:\n\"Game
+    background Music loop short\" & \"Game lobby screen background music\" by yummie
+    @ freesound.org\n\nFONT:\nPixellari by Zacchary Dempsey-Plate @ dafont.com\n\n\n\n"
+--- !u!222 &1346807905
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346807902}
+  m_CullTransparentMesh: 0
+--- !u!114 &1346807906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346807902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee4021ce59f313499a5cab041f02aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: DescTxt
+  FallbackText: "Wenn du auf \u201CSpielen\u201D klickst, erscheint eine Karte vom
+    Bezirk Freistadt. W\xE4hle nun eines der freigeschalteten Levels aus. Freigeschaltete
     Levels sind blau.\n\nIm Spiel musst du benachbarte Symbole miteinander Tauschen,
     damit du 3 oder mehr gleiche in eine Reihe oder Spalte bringst. Gelingt das, verschwinden
     diese Symbole.\n\nZiel des Spiels ist es, das E-Auto mit gr\xFCnen Symbolen aufzuladen
@@ -524,14 +842,6 @@ MonoBehaviour:
     du Upgrades oder schnellere Autos im Shop kaufen.\n\n\nDEVELOPMENT:\nAnna Spiegelmayr\nBernadette
     Theuretzbachner \nf\xFCr Energie Bezirk Freistadt\n\nMUSIK:\n???\n\nFONT:\nPixellari
     von Zacchary Dempsey-Plate @ dafont.com\n\n\n\n"
---- !u!222 &1346807905
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1346807902}
-  m_CullTransparentMesh: 0
 --- !u!1 &1462000279
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,6 +1173,7 @@ GameObject:
   - component: {fileID: 1743473563}
   - component: {fileID: 1743473562}
   - component: {fileID: 1743473561}
+  - component: {fileID: 1743473564}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -935,6 +1246,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1743473564
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743473560}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0e7f9aeffcf544b4c9e7a150e4029e82, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2073916395
 GameObject:
   m_ObjectHideFlags: 0
