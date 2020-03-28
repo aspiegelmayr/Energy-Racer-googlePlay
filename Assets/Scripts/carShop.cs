@@ -137,7 +137,7 @@ public class carShop : MonoBehaviour
         }
         else
         {
-            buyText.text = StartGame.cars[index].cost + " Muenzen fuer " + StartGame.cars[index].carName + " eintauschen?";
+            buyText.text = StartGame.cars[index].carName + " (" + StartGame.cars[index].cost + "$)";
         }
 
         buyText.color = Color.black;
