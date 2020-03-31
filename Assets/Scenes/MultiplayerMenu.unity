@@ -1666,7 +1666,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Car Selection
+  m_Text: Autoauswahl
 --- !u!222 &1156696440
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1758,7 +1758,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Back
+  m_Text: "Zur\xFCck"
 --- !u!222 &1180648748
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -2779,12 +2779,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95f7a509e943415db75eb3312043da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinText: {fileID: 0}
-  carImgs:
+  itemSprites:
+  - {fileID: 21300000, guid: 9cbdd2e1297854670b8e0d8ebbf1e86e, type: 3}
   - {fileID: 21300000, guid: 2142af1b2dd5e428db53602c500d78a5, type: 3}
   - {fileID: 21300000, guid: 26e5189b4441b46059972eb9487fe280, type: 3}
-  - {fileID: 21300000, guid: 9cbdd2e1297854670b8e0d8ebbf1e86e, type: 3}
-  upgradeImgs:
   - {fileID: 21300000, guid: f7a0491ce2b4d41f9a48d28f9944ce85, type: 3}
   - {fileID: 21300000, guid: f7a0491ce2b4d41f9a48d28f9944ce85, type: 3}
   - {fileID: 21300000, guid: f7a0491ce2b4d41f9a48d28f9944ce85, type: 3}

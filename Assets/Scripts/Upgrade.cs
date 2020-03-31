@@ -12,11 +12,11 @@ public class Upgrade
     public int bonusMoves;
     public Sprite upgradeImg;
     public bool owned;
+    public bool active;
 
-    public Upgrade(string upgradeName, string description, int cost, int bonusMoves, Sprite upgradeImg, bool owned)
+    public Upgrade(string upgradeName, int cost, int bonusMoves, Sprite upgradeImg, bool owned)
     {
         this.upgradeName = upgradeName;
-        this.description = description;
         this.cost = cost;
         this.bonusMoves = bonusMoves;
         this.upgradeImg = upgradeImg;

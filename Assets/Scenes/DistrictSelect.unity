@@ -1021,7 +1021,7 @@ MonoBehaviour:
   button: {fileID: 0}
   allButtons: []
   scrollRect: {fileID: 0}
-  dialogCanvas: {fileID: 0}
+  dialogCanvas: {fileID: 298403244}
   coa: []
   coaImg: {fileID: 1926386252}
 --- !u!114 &298403248

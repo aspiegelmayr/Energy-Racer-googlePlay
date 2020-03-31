@@ -8,295 +8,265 @@ using UnityEngine.UI;
 /// </summary>
 public class carShop : MonoBehaviour
 {
-    public Text coinText;
-    public Text buyText;
-    public Button yesButton;
-    public Button noButton;
-    public Button[] carButtons;
-    public Button[] upgradeButtons;
-    public Button upgrade2Button;
-    public Button upgrade3Button;
-    public Text[] carTitles;
-    public Text[] carCosts;
-    public Text[] upgradeTitles;
-    public Text[] upgradeCosts;
-    
-    public static Car activeCar;
-    public Upgrade activeUpgrade;
-    public string buttonTag;
+    public Car[] cars;
+    public Upgrade[] upgrades;
+    public Text carTitle, upgradeTitle, coinsTxt;
+    public Text[] carNames, carCosts, upgradeNames, upgradeCosts;
+    public Text inUseTxt, moneyWarningTxt, nameAndCostTxt;
+    public GameObject confirmPanel;
+    public Button[] carBtns, upgradeBtns;
+    private string selectedTag;
+    private int coins;
+    public Text buyTxt, activateTxt;
 
-    public Image[] carImages;
-    public Image[] upgradeImages;
-
-    /// <summary>
-    /// display buttons
-    /// </summary>
     void Start()
     {
-        hideConfirmDialog();
-        coinText.text = "$" + StartGame.coins;
-
-        fillTextfields();
-        for(int i = 0; i < carButtons.Length; i++)
-        {
-            Button button = carButtons[i].GetComponent<Button>();
-            button.onClick.AddListener(selectItem);
-        }
-
-        for(int i = 0; i < upgradeButtons.Length; i++)
-        {
-            Button button = upgradeButtons[i].GetComponent<Button>();
-            button.onClick.AddListener(selectItem);
-
-        }
-    }
-
-
-    
-    /// <summary>
-    /// display info about upgrades
-    /// </summary>
-    void fillTextfields()
-    {
-        for (int i = 0; i < carTitles.Length; i++)
-        {
-            fillOutInfo(carTitles[i], carCosts[i], carImages[i], StartGame.cars[i]);
-        }
-
-        for (int i = 0; i < upgradeTitles.Length; i++)
-        {
-            fillOutInfo(upgradeTitles[i], upgradeCosts[i], upgradeImages[i], StartGame.upgrades[i]);
-        }
-    }
-    /// <summary>
-    /// method for filling the text fields for cars
-    /// </summary>
-    /// <param name="nameText"></param> text field for car name
-    /// <param name="costText"></param> text field for car cost
-    /// <param name="car"></param> chosen car object
-    void fillOutInfo(Text nameText, Text costText, Image carImage, Car car)
-    {
-        nameText.text = car.carName;
-        carImage.sprite = car.img;
         
-        if (activeCar == car)
-        {
-            costText.text = "aktiv";
-        }
-        else if (car.owned)
-        {
-            costText.text = "in Besitz";
-        }
-        else
-        {
-            costText.text = "$" + car.cost;
-        }
+        //coins = StartGame.coins;
+        coins = 1000;
+        FillOutInfo();
     }
 
-    /// <summary>
-    /// method for filling the text fields for upgrades
-    /// </summary>
-    /// <param name="nameText"></param> text field for upgrade name
-    /// <param name="costText"></param> text field for upgrade cost
-    /// <param name="car"></param> chosen car object
-    void fillOutInfo(Text nameText, Text costText, Image upgradeImage, Upgrade upgrade)
+    void FillOutInfo()
     {
-        nameText.text = upgrade.upgradeName;
-        upgradeImage.sprite = upgrade.upgradeImg;
-        if (activeUpgrade == upgrade)
+        coinsTxt.text = "$" + coins;
+        cars = StartGame.cars;
+        upgrades = StartGame.upgrades;
+        for(int i = 0; i < cars.Length; i++)
         {
-            costText.text = "aktiv";
-        }
-        else if (upgrade.owned)
-        {
-            costText.text = "in Besitz";
-        }
-        else
-        {
-            costText.text = "$" + upgrade.cost;
-        }
-    }
-
-    /// <summary>
-    /// checks if clicked item is owned, if not lets the user buy the item.
-    /// if owned lets the user equip the item
-    /// </summary>
-    void selectItem()
-    {
-        yesButton.gameObject.SetActive(true);
-        noButton.gameObject.SetActive(true);
-
-        var selected = EventSystem.current.currentSelectedGameObject;
-        buttonTag = selected.tag;
-        var index = Convert.ToInt32(buttonTag) - 1;
-
-
-        if (StartGame.cars[index].owned)
-        {
-            buyText.text = StartGame.cars[index].carName + " verwenden?";
-        }
-        else
-        {
-            buyText.text = StartGame.cars[index].carName + " (" + StartGame.cars[index].cost + "$)";
-        }
-
-        buyText.color = Color.black;
-        buyText.gameObject.SetActive(true);
-
-        Button yes = yesButton.GetComponent<Button>();
-        if (index == 0)
-        {
-            buyText.color = Color.blue;
-            buyText.text = "Auto bereits in Verwendung!";
-            yesButton.gameObject.SetActive(false);
-            noButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            yes.onClick.AddListener(buyItem);
-        }
-
-        Button no = noButton.GetComponent<Button>();
-        no.onClick.AddListener(hideConfirmDialog);
-    }
-
-    /// <summary>
-    /// hides the dialog that asks if the user wants to buy an item
-    /// </summary>
-    void hideConfirmDialog()
-    {
-        buyText.gameObject.SetActive(false);
-        yesButton.gameObject.SetActive(false);
-        noButton.gameObject.SetActive(false);
-    }
-
-    void buyCar(int i)
-    {
-        if (validTransaction(StartGame.cars[i].cost) || StartGame.cars[i].owned)
-        {
-            if (!StartGame.cars[i].owned)
+            if (cars[i].owned)
             {
-                updateCoins(StartGame.cars[i].cost);
-
+                cars[i].cost = 0;
             }
-            addNewCar(StartGame.cars[i]);
-            activeCar = StartGame.cars[i];
-            PlayerPrefs.SetInt("activeCar", i);
-            PlayerPrefs.Save();
-            fillTextfields();
-        }
-        else
-        {
-            warnAboutMoney();
+            if (upgrades[i].owned)
+            {
+                upgrades[i].cost = 0;
+            }
+            carNames[i].text = cars[i].carName;
+            carCosts[i].text = "$" + cars[i].cost;
+            carBtns[i].image.sprite = StartGame.carSprites[i];
+            upgradeNames[i].text = upgrades[i].upgradeName;
+            upgradeCosts[i].text = "$" + upgrades[i].cost;
+            upgradeBtns[i].image.sprite = StartGame.upgradeSprites[i];
+            SetOwned();
+            
+            HideAllMsgs();
+            SetOnClickListeners();
         }
     }
 
-    void buyUpgrade(int i, Text upgradeTitle, Text upgradeCost)
+    void SetOwned()
     {
-        if (validTransaction(StartGame.upgrades[i].cost) || StartGame.upgrades[i].owned)
+        for (int i = 0; i < cars.Length; i++)
         {
-            if (!StartGame.upgrades[i].owned)
+            if (cars[i].owned)
             {
-                updateCoins(StartGame.upgrades[i].cost);
-
-
+                if(Lean.Localization.LeanLocalization.CurrentLanguage == "English")
+                {
+                    carCosts[i].text = "owned";
+                } else
+                {
+                    carCosts[i].text = "in Besitz";
+                }
             }
-            addNewUpgrade(StartGame.upgrades[i]);
-            activeUpgrade = StartGame.upgrades[i];
-            PlayerPrefs.SetInt("activeUpgrade", i);
-            PlayerPrefs.Save();
-            fillTextfields();
-
-        }
-        else
-        {
-            warnAboutMoney();
-        }
-    }
-
-    /// <summary>
-    /// lets the user buy items
-    /// </summary>
-    void buyItem()
-    {
-        if (buttonTag != null)
-        {
-            int index = Convert.ToInt32(buttonTag) - 1;
-            if (index >= 0 && index < carTitles.Length)
+            if(StartGame.activeCar.carName == cars[i].carName)
             {
-                buyCar(index);
+                if (Lean.Localization.LeanLocalization.CurrentLanguage == "English")
+                {
+                    carCosts[i].text = "active";
+                }
+                else
+                {
+                    carCosts[i].text = "aktiv";
+                }
             }
-            if (index >= carTitles.Length && index < carTitles.Length + upgradeTitles.Length)
+            if (upgrades[i].owned)
             {
-                buyUpgrade(index, upgradeTitles[index], upgradeCosts[index]);
+                if (Lean.Localization.LeanLocalization.CurrentLanguage == "English")
+                {
+                    upgradeCosts[i].text = "owned";
+                }
+                else
+                {
+                    upgradeCosts[i].text = "in Besitz";
+                }
+            }
+            if (StartGame.activeUpgrade != null && StartGame.activeUpgrade.upgradeName == upgrades[i].upgradeName)
+            {
+                if (Lean.Localization.LeanLocalization.CurrentLanguage == "English")
+                {
+                    upgradeCosts[i].text = "active";
+                }
+                else
+                {
+                    upgradeCosts[i].text = "aktiv";
+                }
             }
         }
     }
 
-    /// <summary>
-    /// called if not enough money available to buy item
-    /// </summary>
-    void warnAboutMoney()
+    int GetActiveCarIndex()
     {
-        buyText.color = Color.red;
-        buyText.text = "nicht genug Geld!";
-    }
-
-    /// <summary>
-    /// checks if user can buy the item
-    /// </summary>
-    /// <param name="cost"></param>
-    /// <returns></returns>
-    bool validTransaction(int cost)
-    {
-        return StartGame.coins >= cost;
-    }
-
-    /// <summary>
-    /// updates current coins after buying an item
-    /// </summary>
-    /// <param name="cost"></param>
-    void updateCoins(int cost)
-    {
-        StartGame.coins -= cost;
-        PlayerPrefs.SetInt("coins", StartGame.coins);
-        PlayerPrefs.Save();
-        coinText.text = "$" + StartGame.coins;
-    }
-
-    void AddCarsToPlayerPrefs()
-    {
-        foreach (var car in StartGame.cars)
+        for(int i = 0; i < cars.Length; i++)
         {
-            if (car.owned == true)
+            if(cars[i].carName == StartGame.activeCar.carName)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    int GetActiveUpgradeIndex()
+    {
+        for (int i = 0; i < upgrades.Length; i++)
+        {
+            if (upgrades[i].upgradeName == StartGame.activeUpgrade.upgradeName)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    void SetActiveCar(Car car)
+    {
+        StartGame.activeCar = car;
+    }
+
+    void SetActiveUpgrade(Upgrade upgrade)
+    {
+        StartGame.activeUpgrade = upgrade;
+    }
+
+    void HideAllMsgs()
+    {
+        inUseTxt.enabled = false;
+        moneyWarningTxt.enabled = false;
+        TogglePanel(false);
+    }
+
+    void SetOnClickListeners()
+    {
+        foreach(var btn in carBtns)
+        {
+            btn.onClick.AddListener(delegate () { TogglePanel(true); });
+        }
+        foreach(var btn in upgradeBtns)
+        {
+            btn.onClick.AddListener(delegate () { TogglePanel(true); });
+        }
+    }
+
+    public void TogglePanel(bool active)
+    {
+        moneyWarningTxt.enabled = false;
+        if (active)
+        {
+            selectedTag = EventSystem.current.currentSelectedGameObject.tag;
+            var index = Convert.ToInt32(selectedTag) - 1;
+            if (index < cars.Length)
+            {
+                SetConfirmDialogTxt(cars[index].owned);
+                nameAndCostTxt.text = cars[index].carName + " - $" + cars[index].cost;
+            } else
+            {
+                SetConfirmDialogTxt(upgrades[index - cars.Length].owned);
+                nameAndCostTxt.text = upgrades[index-cars.Length].upgradeName + " - $" + upgrades[index-cars.Length].cost;
+            }
+
+            confirmPanel.SetActive(true);
+        } else
+        {
+            confirmPanel.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="owned">whether the item is owned</param>
+    void SetConfirmDialogTxt(bool owned)
+    {
+        if (owned)
+        {
+            activateTxt.enabled = true;
+            buyTxt.enabled = false;
+        } else
+        {
+            activateTxt.enabled = false;
+            buyTxt.enabled = true;
+        }
+    }
+
+    public void BuyItem()
+    {
+        if (!CheckValidTransaction())
+        {
+            TogglePanel(false);
+            moneyWarningTxt.enabled = true;
+        }
+        else
+        {
+            coinsTxt.text = "$" + coins;
+            FillOutInfo();
+        }
+    }
+
+
+    bool CheckValidTransaction()
+    {
+        var index = Convert.ToInt32(selectedTag)-1;
+        if(index < cars.Length)
+        {
+            if(cars[index].cost <= coins)
+            {
+                StartGame.activeCar = cars[index];
+                cars[index].owned = true;
+                coins -= cars[index].cost;
+                UpdatePlayerPrefs();
+                return true;
+            }
+        } else
+        {
+            index -= cars.Length;
+            if (upgrades[index].cost <= coins)
+            {
+                StartGame.activeUpgrade = upgrades[index];
+                upgrades[index].owned = true;
+                coins -= upgrades[index].cost;
+                UpdatePlayerPrefs();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void UpdatePlayerPrefs()
+    {
+        PlayerPrefs.SetInt("coins", coins);
+        foreach (var car in cars)
+        {
+            if (car.owned)
             {
                 PlayerPrefs.SetString(car.carName, "owned");
                 PlayerPrefs.Save();
             }
         }
-    }
 
-    void AddUpgradesToPlayerPrefs()
-    {
-        for (int i = 0; i < StartGame.upgrades.Length; i++)
+        foreach (var upgrade in upgrades)
         {
-            if (StartGame.upgrades[i] != null)
+            if (upgrade.owned)
             {
-                PlayerPrefs.SetString(StartGame.upgrades[i].upgradeName, "owned");
+                PlayerPrefs.SetString(upgrade.upgradeName, "owned");
                 PlayerPrefs.Save();
             }
         }
-    }
-
-    void addNewCar(Car car)
-    {
-        car.owned = true;
-        AddCarsToPlayerPrefs();
-    }
-
-    void addNewUpgrade(Upgrade upgrade)
-    {
-        upgrade.owned = true;
-        AddUpgradesToPlayerPrefs();
+        PlayerPrefs.SetString("activeCar", StartGame.activeCar.carName);
+        if (StartGame.activeUpgrade != null)
+        {
+            PlayerPrefs.SetString("activeUpgrade", StartGame.activeUpgrade.upgradeName);
+        }
+        PlayerPrefs.Save();
     }
 }

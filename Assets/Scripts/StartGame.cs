@@ -8,31 +8,40 @@ using UnityEngine.SceneManagement;
 public class StartGame : MonoBehaviour
 {
     public static int coins;
-    public Text coinText;
 
     public static Car[] cars;
-    public Sprite[] carImgs;
+
+    public Sprite[] itemSprites;
+
+    public static Sprite[] carSprites;
 
     public static Upgrade[] upgrades;
-    public Sprite[] upgradeImgs;
+    public static Sprite[] upgradeSprites;
 
     public static Car activeCar;
     public static Upgrade activeUpgrade;
 
     public GameObject multiplayerPanel;
 
+    public static string curLanguage;
+
     /// <summary>
     /// get the amount of coins from local storage
     /// </summary>
     void Start()
     {
+        curLanguage = Lean.Localization.LeanLocalization.CurrentLanguage;
         Board.isMultiplayer = false;
         Board.isOnlineMultiplayer = false;
         multiplayerPanel.SetActive(false);
         cars = new Car[3];
         upgrades = new Upgrade[3];
         coins = new int();
-        createItems();
+        SetSprites();
+        if (cars[0] == null || upgrades[0] == null)
+        {
+            createItems();
+        }
         GetFromPlayerPrefs();
         
 
@@ -43,13 +52,38 @@ public class StartGame : MonoBehaviour
         }
     }
 
+    void SetSprites()
+    {
+        carSprites = new Sprite[itemSprites.Length / 2];
+        upgradeSprites = new Sprite[itemSprites.Length/2];
+        for (int i = 0; i < itemSprites.Length/2; i++)
+        {
+            carSprites[i] = itemSprites[i];
+        }
+
+        for(int i = itemSprites.Length/2; i < itemSprites.Length; i++)
+        {
+            upgradeSprites[i-itemSprites.Length/2] = itemSprites[i];
+        }
+    }
+
     void GetFromPlayerPrefs()
     {
+        var activeCarName = PlayerPrefs.GetString("activeCar");
+        var activeUpgradeName = PlayerPrefs.GetString("activeUpgrade");
+
         foreach (var car in cars)
         {
+            string own = PlayerPrefs.GetString(car.carName);
+            Debug.Log(car.carName + own);
+           
             if (PlayerPrefs.GetString(car.carName) == "owned")
             {
                 car.owned = true;
+                if(activeCarName == car.carName)
+                {
+                    activeCar = car;
+                }
             }
         }
 
@@ -58,14 +92,18 @@ public class StartGame : MonoBehaviour
             if (PlayerPrefs.GetString(upgrade.upgradeName) == "owned")
             {
                 upgrade.owned = true;
+                if (activeUpgradeName == upgrade.upgradeName)
+                {
+                    activeUpgrade = upgrade;
+                }
             }
         }
 
         coins = PlayerPrefs.GetInt("coins");
-
-        activeCar = cars[PlayerPrefs.GetInt("activeCar")];
-        activeUpgrade = upgrades[PlayerPrefs.GetInt("activeUpgrade")];
-
+        if(activeCar == null)
+        {
+            activeCar = cars[0];
+        }
     }
 
     /// <summary>
@@ -73,13 +111,13 @@ public class StartGame : MonoBehaviour
     /// </summary>
     void createItems()
     {
-        cars[0] = new Car("Standard Car", "standard car", 0, 0, true, carImgs[0]);
-        cars[1] = new Car("Sports Car", "-2 needed moves", 200, 2, false, carImgs[1]);
-        cars[2] = new Car("Super Car", "-3 needed moves", 400, 3, false, carImgs[2]);
+        cars[0] = new Car("Standard Car", 0, 0, true, carSprites[0]);
+        cars[1] = new Car("Sports Car", 200, 2, false, carSprites[1]);
+        cars[2] = new Car("Super Car", 400, 3, false, carSprites[2]);
 
-        upgrades[0] = new Upgrade("Extra Move", "1 Move mehr", 75, 1, upgradeImgs[0], false);
-        upgrades[1] = new Upgrade("Extra Move XL", "2 Moves mehr", 150, 2, upgradeImgs[1], false);
-        upgrades[2] = new Upgrade("Extra Move XXL", "3 Moves mehr", 300, 3, upgradeImgs[2], false);
+        upgrades[0] = new Upgrade("Extra Move", 75, 1, upgradeSprites[0], false);
+        upgrades[1] = new Upgrade("Extra Move XL", 150, 2, upgradeSprites[1], false);
+        upgrades[2] = new Upgrade("Extra Move XXL", 300, 3, upgradeSprites[2], false);
     }
 
 

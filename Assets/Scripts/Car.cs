@@ -13,11 +13,11 @@ public class Car
     public int movesReduction;
     public Sprite img;
     public bool owned;
+    public bool active;
 
-    public Car(string carName, string description, int cost, int movesReduction, bool owned, Sprite img)
+    public Car(string carName, int cost, int movesReduction, bool owned, Sprite img)
     {
         this.carName = carName;
-        this.description = description;
         this.cost = cost;
         this.movesReduction = movesReduction;
         this.owned = owned;
