@@ -21,9 +21,7 @@ public class carShop : MonoBehaviour
 
     void Start()
     {
-        
-        //coins = StartGame.coins;
-        coins = 1000;
+        coins = StartGame.coins;
         FillOutInfo();
     }
 
@@ -103,40 +101,6 @@ public class carShop : MonoBehaviour
                 }
             }
         }
-    }
-
-    int GetActiveCarIndex()
-    {
-        for(int i = 0; i < cars.Length; i++)
-        {
-            if(cars[i].carName == StartGame.activeCar.carName)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    int GetActiveUpgradeIndex()
-    {
-        for (int i = 0; i < upgrades.Length; i++)
-        {
-            if (upgrades[i].upgradeName == StartGame.activeUpgrade.upgradeName)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    void SetActiveCar(Car car)
-    {
-        StartGame.activeCar = car;
-    }
-
-    void SetActiveUpgrade(Upgrade upgrade)
-    {
-        StartGame.activeUpgrade = upgrade;
     }
 
     void HideAllMsgs()

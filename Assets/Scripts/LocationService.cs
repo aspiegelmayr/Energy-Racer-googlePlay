@@ -56,12 +56,10 @@ public class LocationService : MonoBehaviour
 
         LAT = curDistrict.Latitude;
         LON = curDistrict.Longitude;
-        Debug.Log("Coord: " + LAT + "/" + LON);
 
         GetWeatherData(curDistrict.Latitude, curDistrict.Longitude);
         SetLevelDifficulty();
         SetNeededScore();
-        //location.text = curDistrict.Name;
         level.text = "LEVEL: " + levelDifficulty.ToString();
         level.color = SetLevelTextColor();
         board.Setup(7, 7, 20, neededScore, levelDifficulty);
@@ -136,7 +134,6 @@ public class LocationService : MonoBehaviour
         double dailyTotal = GetDailyTotal();
         if (CHECKSUN == true)
         {
-            Debug.Log("daily total: " + dailyTotal);
             if (dailyTotal != 0)
             {               
                 if (dailyTotal > 0.00 && dailyTotal <= 25.00) {
