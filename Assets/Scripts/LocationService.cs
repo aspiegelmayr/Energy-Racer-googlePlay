@@ -62,7 +62,12 @@ public class LocationService : MonoBehaviour
         SetNeededScore();
         level.text = "LEVEL: " + levelDifficulty.ToString();
         level.color = SetLevelTextColor();
-        board.Setup(7, 7, 20, neededScore, levelDifficulty);
+        var moves = 20;
+        if(StartGame.activeUpgrade != null)
+        {
+            moves += StartGame.activeUpgrade.bonusMoves;
+        }
+        board.Setup(7, 7, moves, neededScore, levelDifficulty);
     } /// GetDeviceLocation method
 
     private Color32 SetLevelTextColor()

@@ -42,6 +42,7 @@ public class Board : MonoBehaviour
     static GameObject gameController;
     static LocationService locationService;
 
+    public Image bonusMoveImg;
     //  public static bool backgroundIsSet;
 
     public Sprite carImg;
@@ -65,9 +66,18 @@ public class Board : MonoBehaviour
     /// </summary>
     void Start()
     {
+        if(StartGame.activeUpgrade == null)
+        {
+            bonusMoveImg.enabled = false;
+        } else
+        {
+            bonusMoveImg.sprite = StartGame.activeUpgrade.upgradeImg;
+            bonusMoveImg.enabled = true;
+        }
         location.text = LevelSelection.districtName;
         isMultiplayer = LevelSelection.isMultiplayer;
         playerNickname.enabled = false;
+        
         if (isMultiplayer)
         {
             curPlayerText.text = curPlayer;
@@ -79,6 +89,7 @@ public class Board : MonoBehaviour
             coinsText.enabled = false;
             playerNickname.text = curPlayer;
             playerNickname.enabled = true;
+            
         }
         else if (isOnlineMultiplayer)
         {
