@@ -1018,12 +1018,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   districtName: {fileID: 1427032529}
-  button: {fileID: 0}
   allButtons: []
   scrollRect: {fileID: 0}
   dialogCanvas: {fileID: 298403244}
   coa: []
   coaImg: {fileID: 1926386252}
+  backBtn: {fileID: 1788780244}
 --- !u!114 &298403248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3425,7 +3425,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   districtName: {fileID: 1427032529}
-  button: {fileID: 125983113}
   allButtons:
   - {fileID: 125983115}
   - {fileID: 247634385}
@@ -3485,6 +3484,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3bc1aa5d33cb44ffd8afa49982b72be7, type: 3}
   - {fileID: 21300000, guid: cd067798bc9584504adca842e584b1a0, type: 3}
   coaImg: {fileID: 1926386252}
+  backBtn: {fileID: 1788780244}
 --- !u!1 &1083558020
 GameObject:
   m_ObjectHideFlags: 0
@@ -6674,7 +6674,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

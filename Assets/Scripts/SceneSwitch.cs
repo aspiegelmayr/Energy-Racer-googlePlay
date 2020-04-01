@@ -89,15 +89,16 @@ public class SceneSwitch : MonoBehaviour
 
     public void GoToStartScene()
     {
-        if (SceneManager.GetActiveScene().name == "GameWon")
-        {
-            if (DistrictSelection.curDistrict >= DistrictSelection.unlockedDistricts)
-                DistrictSelection.unlockedDistricts++;
-            StartGame.coins += Board.earnedCoins;
-            PlayerPrefs.SetInt("coins", StartGame.coins);
-        }
+            if (SceneManager.GetActiveScene().name == "GameWon")
+            {
+                if (DistrictSelection.curDistrict >= DistrictSelection.unlockedDistricts)
+                    DistrictSelection.unlockedDistricts++;
+                StartGame.coins += Board.earnedCoins;
+                PlayerPrefs.SetInt("coins", StartGame.coins);
+            }
 
-        SceneManager.LoadScene("StartScene");
+            SceneManager.LoadScene("StartScene");
+        
     }
 
     public void GoToShopScene()

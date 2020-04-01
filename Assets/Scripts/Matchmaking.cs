@@ -26,7 +26,7 @@ public class Matchmaking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //warningPanel.SetActive(false);
+        warningPanel.SetActive(false);
         if(role == "host")
         {
             ActivateButtons(false);
