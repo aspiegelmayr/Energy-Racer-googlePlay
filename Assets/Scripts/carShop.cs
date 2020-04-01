@@ -13,11 +13,12 @@ public class carShop : MonoBehaviour
     public Text carTitle, upgradeTitle, coinsTxt;
     public Text[] carNames, carCosts, upgradeNames, upgradeCosts;
     public Text inUseTxt, moneyWarningTxt, nameAndCostTxt;
-    public GameObject confirmPanel;
+    public GameObject confirmPanel, infoPanel;
     public Button[] carBtns, upgradeBtns;
     private string selectedTag;
     private int coins;
     public Text buyTxt, activateTxt;
+    public Text infoTxt;
 
     void Start()
     {
@@ -105,9 +106,11 @@ public class carShop : MonoBehaviour
 
     void HideAllMsgs()
     {
+        infoPanel.SetActive(false);
         inUseTxt.enabled = false;
         moneyWarningTxt.enabled = false;
         TogglePanel(false);
+        infoTxt.enabled = false;
     }
 
     void SetOnClickListeners()
@@ -133,10 +136,12 @@ public class carShop : MonoBehaviour
             {
                 SetConfirmDialogTxt(cars[index].owned);
                 nameAndCostTxt.text = cars[index].carName + " - $" + cars[index].cost;
+                SetInfoText(cars[index]);
             } else
             {
                 SetConfirmDialogTxt(upgrades[index - cars.Length].owned);
                 nameAndCostTxt.text = upgrades[index-cars.Length].upgradeName + " - $" + upgrades[index-cars.Length].cost;
+                SetInfoText(upgrades[index - cars.Length]);
             }
 
             confirmPanel.SetActive(true);
@@ -144,6 +149,66 @@ public class carShop : MonoBehaviour
         {
             confirmPanel.SetActive(false);
         }
+    }
+
+    void SetInfoText(Car car)
+    {
+        infoPanel.SetActive(true);
+        if(StartGame.curLanguage == "English")
+        {
+            infoTxt.text = "When driving " + car.carName + " you get " + car.movesReduction + " bonus ";
+            if (car.movesReduction == 1)
+            {
+                infoTxt.text += "point.";
+            }
+            else
+            {
+                infoTxt.text += "points.";
+            }
+        } else
+        {
+            infoTxt.text = "Mit " + car.carName + "bekommst du " + car.movesReduction + " Bonus-";
+            if (car.movesReduction == 1)
+            {
+                infoTxt.text += "Punkt.";
+            }
+            else
+            {
+                infoTxt.text += "Punkte.";
+            }
+        }
+        
+        infoTxt.enabled = true;
+    }
+
+    void SetInfoText(Upgrade upgrade)
+    {
+        infoPanel.SetActive(true);
+        if (StartGame.curLanguage == "English")
+        {
+            infoTxt.text = "When " + upgrade.upgradeName + " is active, you get " + upgrade.bonusMoves + " bonus ";
+            if (upgrade.bonusMoves == 1)
+            {
+                infoTxt.text += "move.";
+            } else
+            {
+               infoTxt.text += "moves.";
+            }
+        }
+        else
+        {
+            infoTxt.text = "Mit " + upgrade.upgradeName + "bekommst du " + upgrade.bonusMoves + " Bonus-";
+            if (upgrade.bonusMoves == 1)
+            {
+                infoTxt.text += "Zug.";
+            }
+            else
+            {
+                infoTxt.text += "Züge.";
+            }
+        }
+
+        infoTxt.enabled = true;
     }
 
     /// <summary>
