@@ -16,7 +16,7 @@ public class Board : MonoBehaviour
     public GameObject[,] allDots;
     public static int curScore;
     public int neededScore;
-    public Text coinsText;
+    public Text ownedCoinsText, coinsText;
     public Text movesText;
     public Text neededScoreText;
     public static int remainingMoves;
@@ -66,6 +66,7 @@ public class Board : MonoBehaviour
     /// </summary>
     void Start()
     {
+        ownedCoinsText.text = "$" + StartGame.coins;
         if(StartGame.activeUpgrade == null)
         {
             bonusMoveImg.enabled = false;
@@ -80,6 +81,7 @@ public class Board : MonoBehaviour
         
         if (isMultiplayer)
         {
+            ownedCoinsText.enabled = false;
             curPlayerText.text = curPlayer;
             slider.image.sprite = MultiplayerMenu.player1Sprite;
             playerName.text = player1Nickname;
@@ -93,6 +95,7 @@ public class Board : MonoBehaviour
         }
         else if (isOnlineMultiplayer)
         {
+            ownedCoinsText.enabled = false;
             coinsText.enabled = false;
             movesText.enabled = false;
             if(Matchmaking.role == "host")
@@ -131,7 +134,7 @@ public class Board : MonoBehaviour
         gameController = GameObject.Find("GameController");
 
         earnedCoins = 30;
-        coinsText.text = earnedCoins.ToString();
+        coinsText.text = "+" + earnedCoins;
 
         width = 7;
         height = 7;
@@ -600,7 +603,7 @@ public class Board : MonoBehaviour
             earnedCoins = 20;
         }
 
-        coinsText.text = earnedCoins.ToString();
+        coinsText.text = "+" + earnedCoins;
     }
 
     void GetOpponentScore()
