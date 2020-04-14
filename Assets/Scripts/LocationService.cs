@@ -72,7 +72,7 @@ public class LocationService : MonoBehaviour
 
     private Color32 SetLevelTextColor()
     {
-        Color32 c = new Color32(0, 0, 0, 255);
+        Color32 c = new Color32(255, 255, 255, 255);
         switch (levelDifficulty)
         {
             case 1:
@@ -98,7 +98,7 @@ public class LocationService : MonoBehaviour
             default:
                 break;
         }
-        /// night with level 6 or default = black
+        /// night with level 6 or default = white
         return c;
     }
 
