@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Matchmaking : MonoBehaviour
 {
+    public Text matchTitle;
     public Text matchDetails;
     public static string matchID;
     public static string hostName;
@@ -165,6 +166,8 @@ public class Matchmaking : MonoBehaviour
                 }
                 RestClient.Put("https://energyracer.firebaseio.com/lobby/" + id + ".json", match).Then(reply =>
                 {
+                    matchTitle.enabled = true;
+                    matchDetails.enabled =true;
                     result = JSON.Parse(reply.Text);
                     matchDetails.text = "Name: " + result["matchID"] + "\n" +
                     "Player 1: " + result["hostName"] + "\n" +
